@@ -13,33 +13,20 @@
 @implementation RootViewController
 		
 @synthesize detailViewController;
+@synthesize githubEngine;
+@synthesize repos;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = NO;
     self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
-}
-
-		
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
+    
+    githubEngine = [[UAGithubEngine alloc] initWithUsername:@"oscardelben" password:@"4f4CwUjS" delegate:self withReachability:NO];
+    
+    // Todo: this doesn't include forks
+    // Todo: put a loding gif when loading
+    [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -55,7 +42,7 @@
 		
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return [repos count];
     		
 }
 
@@ -66,44 +53,38 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        
+        cell.textLabel.backgroundColor = [UIColor clearColor];
+        cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     }
 
     // Configure the cell.
-    		
+    NSDictionary *repo = [repos objectAtIndex:indexPath.row];
+
+    cell.textLabel.text = [repo valueForKey:@"name"];
+    cell.detailTextLabel.text = [repo valueForKey:@"description"];
+    
+    int private = [[repo valueForKey:@"private"] intValue];
+    if (private == 1) 
+    {
+        cell.imageView.image = [UIImage imageNamed:@"private.png"];
+        
+        // background color
+        UIView *bg = [[UIView alloc] initWithFrame:cell.frame];
+        bg.backgroundColor = [UIColor colorWithRed:255/255.0 green:254/255.0 blue:235/255.0 alpha:1];
+        cell.backgroundView = bg;
+        [bg release];
+    } 
+    else
+    {
+        cell.imageView.image = [UIImage imageNamed:@"public.png"];
+    }
+    
+    // TODO: try to change cell height
+    
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source.
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -135,7 +116,34 @@
 - (void)dealloc
 {
     [detailViewController release];
+    [githubEngine release];
+    [repos release];
     [super dealloc];
 }
+
+#pragma mark UAGithubEngineDelegate Methods
+
+- (void)requestSucceeded:(NSString *)connectionIdentifier
+{
+	NSLog(@"Request succeeded: %@", connectionIdentifier);
+}
+
+
+- (void)requestFailed:(NSString *)connectionIdentifier withError:(NSError *)error
+{
+    NSLog(@"Request failed: %@, error: %@ (%@)", connectionIdentifier, [error localizedDescription], [error userInfo]);	
+}
+
+
+#pragma mark Github api
+
+- (void)repositoriesReceived:(NSArray *)repositories forConnection:(NSString *)connectionIdentifier
+{
+    NSLog(@"%@", repositories);
+    
+    self.repos = repositories;
+    [self.tableView reloadData];
+}
+
 
 @end

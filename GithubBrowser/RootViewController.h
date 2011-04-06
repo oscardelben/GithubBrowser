@@ -10,11 +10,14 @@
 
 @class DetailViewController;
 
-@interface RootViewController : UITableViewController {
+@interface RootViewController : UITableViewController <UAGithubEngineDelegate> {
 
 }
 
 		
 @property (nonatomic, retain) IBOutlet DetailViewController *detailViewController;
+
+@property (nonatomic, retain) UAGithubEngine *githubEngine;
+@property (nonatomic, retain) NSArray *repos;
 
 @end
