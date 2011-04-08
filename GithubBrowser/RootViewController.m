@@ -24,8 +24,12 @@
     
     githubEngine = [[UAGithubEngine alloc] initWithUsername:@"oscardelben" password:@"4f4CwUjS" delegate:self withReachability:NO];
     
-    // Todo: this doesn't include forks
+    // Todo: differentiate forks
     // Todo: put a loding gif when loading
+    // TODO: add settings for username
+    // TODO: add error whehn internet connection is not available (use GithubEngine delegate method?)
+    // Todo: test with hundreds of repos
+    // TODO: if the user is logged out from github, it shows a 404 page when accessing a private repo
     [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO];
 }
 
@@ -88,29 +92,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here -- for example, create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
-}
+    NSDictionary *currentRepo = [self.repos objectAtIndex:indexPath.row];
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-
-    // Relinquish ownership any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload
-{
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
+    detailViewController.detailItem = currentRepo;
 }
 
 - (void)dealloc

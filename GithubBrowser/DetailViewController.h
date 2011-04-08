@@ -10,6 +10,7 @@
 
 @interface DetailViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate> {
 
+    UIWebView *_webView;
 }
 
 
@@ -17,6 +18,6 @@
 
 @property (nonatomic, retain) id detailItem;
 
-@property (nonatomic, retain) IBOutlet UILabel *detailDescriptionLabel;
+@property (nonatomic, retain) IBOutlet UIWebView *webView;
 
 @end

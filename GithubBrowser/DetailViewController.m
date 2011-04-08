@@ -9,6 +9,7 @@
 #import "DetailViewController.h"
 
 #import "RootViewController.h"
+#import "FullScreenViewController.h"
 
 @interface DetailViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -21,7 +22,7 @@
 
 @synthesize detailItem=_detailItem;
 
-@synthesize detailDescriptionLabel=_detailDescriptionLabel;
+@synthesize webView = _webView;
 
 @synthesize popoverController=_myPopoverController;
 
@@ -48,28 +49,11 @@
 - (void)configureView
 {
     // Update the user interface for the detail item.
-
-    self.detailDescriptionLabel.text = [self.detailItem description];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
+    
+    NSURL *url = [NSURL URLWithString:[self.detailItem valueForKey:@"url"]];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    
+    [self.webView loadRequest:req];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -98,16 +82,29 @@
     self.popoverController = nil;
 }
 
-/*
+
  // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
+
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                               target:nil
+                               action:nil];
+    
+    // TODO: disable when no view is loaded
+    self.toolbar.items = [NSArray arrayWithObjects:spacer, fullScreenItem, nil];
+    
+    [fullScreenItem release];
+    [spacer release];
 }
- */
 
 - (void)viewDidUnload
 {
+    [self setWebView:nil];
 	[super viewDidUnload];
 
 	// Release any retained subviews of the main view.
@@ -115,22 +112,28 @@
 	self.popoverController = nil;
 }
 
-#pragma mark - Memory management
+# pragma mark full screen
 
-- (void)didReceiveMemoryWarning
+- (void)showFullScreen
 {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
+    FullScreenViewController *fullScreenViewController = [[FullScreenViewController alloc] initWithNibName:@"FullScreenViewController" bundle:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:fullScreenViewController];
+
+    navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentModalViewController:navController animated:YES];
+    
+    [fullScreenViewController release];
+    [navController release];
 }
+
+#pragma mark - Memory management
 
 - (void)dealloc
 {
     [_myPopoverController release];
     [_toolbar release];
     [_detailItem release];
-    [_detailDescriptionLabel release];
+    [_webView release];
     [super dealloc];
 }
 
