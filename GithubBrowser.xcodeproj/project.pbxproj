@@ -36,7 +36,6 @@
 		55A26985134C95B70051D97A /* private.png in Resources */ = {isa = PBXBuildFile; fileRef = 55A26983134C95B70051D97A /* private.png */; };
 		55A26986134C95B70051D97A /* public.png in Resources */ = {isa = PBXBuildFile; fileRef = 55A26984134C95B70051D97A /* public.png */; };
 		55A26996134CC4CF0051D97A /* full_screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 55A26995134CC4CF0051D97A /* full_screen.png */; };
-		55A2699B134E5FBA0051D97A /* Class.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55A26999134E5FB90051D97A /* Class.xib */; };
 		55A2699F134E5FD50051D97A /* FullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A2699D134E5FD40051D97A /* FullScreenViewController.m */; };
 		55A269A0134E5FD50051D97A /* FullScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55A2699E134E5FD40051D97A /* FullScreenViewController.xib */; };
 		55C02D46134C775A00606C13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C02D45134C775A00606C13 /* UIKit.framework */; };
@@ -109,7 +108,6 @@
 		55A26983134C95B70051D97A /* private.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = private.png; sourceTree = "<group>"; };
 		55A26984134C95B70051D97A /* public.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = public.png; sourceTree = "<group>"; };
 		55A26995134CC4CF0051D97A /* full_screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = full_screen.png; sourceTree = "<group>"; };
-		55A26999134E5FB90051D97A /* Class.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Class.xib; sourceTree = "<group>"; };
 		55A2699C134E5FD40051D97A /* FullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullScreenViewController.h; sourceTree = "<group>"; };
 		55A2699D134E5FD40051D97A /* FullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullScreenViewController.m; sourceTree = "<group>"; };
 		55A2699E134E5FD40051D97A /* FullScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FullScreenViewController.xib; sourceTree = "<group>"; };
@@ -274,7 +272,6 @@
 				55C02D60134C775B00606C13 /* RootViewController.h */,
 				55C02D61134C775B00606C13 /* RootViewController.m */,
 				55C02D4C134C775A00606C13 /* Supporting Files */,
-				55A26999134E5FB90051D97A /* Class.xib */,
 				55A2699C134E5FD40051D97A /* FullScreenViewController.h */,
 				55A2699D134E5FD40051D97A /* FullScreenViewController.m */,
 				55A2699E134E5FD40051D97A /* FullScreenViewController.xib */,
@@ -350,7 +347,6 @@
 				55A26985134C95B70051D97A /* private.png in Resources */,
 				55A26986134C95B70051D97A /* public.png in Resources */,
 				55A26996134CC4CF0051D97A /* full_screen.png in Resources */,
-				55A2699B134E5FBA0051D97A /* Class.xib in Resources */,
 				55A269A0134E5FD50051D97A /* FullScreenViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

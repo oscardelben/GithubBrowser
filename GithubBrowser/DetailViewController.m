@@ -119,6 +119,9 @@
     FullScreenViewController *fullScreenViewController = [[FullScreenViewController alloc] initWithNibName:@"FullScreenViewController" bundle:nil];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:fullScreenViewController];
 
+    fullScreenViewController.parentController = self;
+    
+
     navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentModalViewController:navController animated:YES];
     
