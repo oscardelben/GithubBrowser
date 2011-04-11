@@ -20,4 +20,6 @@
 @property (nonatomic, retain) UAGithubEngine *githubEngine;
 @property (nonatomic, retain) NSArray *repos;
 
+- (void)reloadRepos;
+
 @end

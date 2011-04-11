@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55983BC91350962A00483DAC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BC71350962A00483DAC /* SettingsViewController.m */; };
+		55983BCA1350962A00483DAC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55983BC81350962A00483DAC /* SettingsViewController.xib */; };
+		55983BCD1351A3DE00483DAC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BCC1351A3DE00483DAC /* Constants.m */; };
+		55983BD11351A64100483DAC /* NSString+DBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BD01351A64100483DAC /* NSString+DBExtensions.m */; };
 		55A26967134C8D500051D97A /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A2692F134C8D500051D97A /* CDataScanner.m */; };
 		55A26968134C8D500051D97A /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A26932134C8D500051D97A /* CDataScanner_Extensions.m */; };
 		55A26969134C8D500051D97A /* NSCharacterSet_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A26934134C8D500051D97A /* NSCharacterSet_Extensions.m */; };
@@ -51,6 +55,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		55983BC61350962A00483DAC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		55983BC71350962A00483DAC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		55983BC81350962A00483DAC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		55983BCB1351A3DE00483DAC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		55983BCC1351A3DE00483DAC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		55983BCF1351A64100483DAC /* NSString+DBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DBExtensions.h"; sourceTree = "<group>"; };
+		55983BD01351A64100483DAC /* NSString+DBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DBExtensions.m"; sourceTree = "<group>"; };
 		55A2692E134C8D500051D97A /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
 		55A2692F134C8D500051D97A /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		55A26931134C8D500051D97A /* CDataScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner_Extensions.h; sourceTree = "<group>"; };
@@ -143,6 +154,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		55983BCE1351A64100483DAC /* NSStringExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				55983BCF1351A64100483DAC /* NSString+DBExtensions.h */,
+				55983BD01351A64100483DAC /* NSString+DBExtensions.m */,
+			);
+			path = NSStringExtensions;
+			sourceTree = "<group>";
+		};
+		55983BD213530CFA00483DAC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				55A2699E134E5FD40051D97A /* FullScreenViewController.xib */,
+				55983BC81350962A00483DAC /* SettingsViewController.xib */,
+				55C02D5D134C775B00606C13 /* DetailView.xib */,
+				55C02D57134C775B00606C13 /* MainWindow.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		55A2692D134C8D500051D97A /* Github Api */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,19 +293,22 @@
 		55C02D4B134C775A00606C13 /* GithubBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				55983BCE1351A64100483DAC /* NSStringExtensions */,
 				55A2692D134C8D500051D97A /* Github Api */,
 				55C02D54134C775A00606C13 /* GithubBrowserAppDelegate.h */,
 				55C02D55134C775A00606C13 /* GithubBrowserAppDelegate.m */,
-				55C02D57134C775B00606C13 /* MainWindow.xib */,
 				55C02D5A134C775B00606C13 /* DetailViewController.h */,
 				55C02D5B134C775B00606C13 /* DetailViewController.m */,
-				55C02D5D134C775B00606C13 /* DetailView.xib */,
 				55C02D60134C775B00606C13 /* RootViewController.h */,
 				55C02D61134C775B00606C13 /* RootViewController.m */,
-				55C02D4C134C775A00606C13 /* Supporting Files */,
 				55A2699C134E5FD40051D97A /* FullScreenViewController.h */,
 				55A2699D134E5FD40051D97A /* FullScreenViewController.m */,
-				55A2699E134E5FD40051D97A /* FullScreenViewController.xib */,
+				55983BC61350962A00483DAC /* SettingsViewController.h */,
+				55983BC71350962A00483DAC /* SettingsViewController.m */,
+				55983BCB1351A3DE00483DAC /* Constants.h */,
+				55983BCC1351A3DE00483DAC /* Constants.m */,
+				55C02D4C134C775A00606C13 /* Supporting Files */,
+				55983BD213530CFA00483DAC /* Resources */,
 			);
 			path = GithubBrowser;
 			sourceTree = "<group>";
@@ -348,6 +382,7 @@
 				55A26986134C95B70051D97A /* public.png in Resources */,
 				55A26996134CC4CF0051D97A /* full_screen.png in Resources */,
 				55A269A0134E5FD50051D97A /* FullScreenViewController.xib in Resources */,
+				55983BCA1350962A00483DAC /* SettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +423,9 @@
 				55A26980134C8D500051D97A /* UAGithubUsersJSONParser.m in Sources */,
 				55A26981134C8D500051D97A /* UAReachability.m in Sources */,
 				55A2699F134E5FD50051D97A /* FullScreenViewController.m in Sources */,
+				55983BC91350962A00483DAC /* SettingsViewController.m in Sources */,
+				55983BCD1351A3DE00483DAC /* Constants.m in Sources */,
+				55983BD11351A64100483DAC /* NSString+DBExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,10 @@
 
 #import "RootViewController.h"
 #import "FullScreenViewController.h"
+#import "SettingsViewController.h"
+#import "Constants.h"
+#import "NSString+DBExtensions.h"
+
 
 @interface DetailViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -100,6 +104,25 @@
     
     [fullScreenItem release];
     [spacer release];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *username = [userDefaults objectForKey:GBGithubUsername];
+    NSString *password = [userDefaults objectForKey:GBGithubPassword];
+    
+    if (!username || [username blank] || !password || [password blank]) 
+    {
+        SettingsViewController *viewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+        viewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+        [self presentModalViewController:viewController animated:YES];
+    
+        [viewController release];
+    }
 }
 
 - (void)viewDidUnload

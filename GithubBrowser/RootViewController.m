@@ -9,6 +9,8 @@
 #import "RootViewController.h"
 
 #import "DetailViewController.h"
+#import "NSString+DBExtensions.h"
+#import "Constants.h"
 
 @implementation RootViewController
 		
@@ -21,15 +23,40 @@
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = NO;
     self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(reloadRepos) name:GBCredentialsChanged object:nil];
     
-    githubEngine = [[UAGithubEngine alloc] initWithUsername:@"oscardelben" password:@"4f4CwUjS" delegate:self withReachability:NO];
+    [self reloadRepos];
     
     // Todo: differentiate forks
+    // TODO: add errior handling (no internet, etc)
     // Todo: put a loding gif when loading
-    // TODO: add settings for username
     // TODO: add error whehn internet connection is not available (use GithubEngine delegate method?)
-    // Todo: test with hundreds of repos
+    // Todo: test with hundreds of repos, perhaps use pagination?
     // TODO: if the user is logged out from github, it shows a 404 page when accessing a private repo
+}
+
+- (void)viewDidUnload
+{
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter removeObserver:self];
+    
+    [super viewDidUnload];
+}
+
+- (void)reloadRepos
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *username = [userDefaults objectForKey:GBGithubUsername];
+    NSString *password = [userDefaults objectForKey:GBGithubPassword];
+    
+    if (!username || [username blank] || !password || [password blank]) {
+        return;
+    }
+    
+    githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:password delegate:self withReachability:NO];
+    
     [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO];
 }
 
@@ -104,6 +131,7 @@
     [repos release];
     [super dealloc];
 }
+
 
 #pragma mark UAGithubEngineDelegate Methods
 
