@@ -11,6 +11,7 @@
 		55983BCA1350962A00483DAC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55983BC81350962A00483DAC /* SettingsViewController.xib */; };
 		55983BCD1351A3DE00483DAC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BCC1351A3DE00483DAC /* Constants.m */; };
 		55983BD11351A64100483DAC /* NSString+DBExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BD01351A64100483DAC /* NSString+DBExtensions.m */; };
+		55983BD51353216C00483DAC /* ApplicationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BD41353216C00483DAC /* ApplicationHelper.m */; };
 		55A26967134C8D500051D97A /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A2692F134C8D500051D97A /* CDataScanner.m */; };
 		55A26968134C8D500051D97A /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A26932134C8D500051D97A /* CDataScanner_Extensions.m */; };
 		55A26969134C8D500051D97A /* NSCharacterSet_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A26934134C8D500051D97A /* NSCharacterSet_Extensions.m */; };
@@ -62,6 +63,8 @@
 		55983BCC1351A3DE00483DAC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		55983BCF1351A64100483DAC /* NSString+DBExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DBExtensions.h"; sourceTree = "<group>"; };
 		55983BD01351A64100483DAC /* NSString+DBExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DBExtensions.m"; sourceTree = "<group>"; };
+		55983BD31353216C00483DAC /* ApplicationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationHelper.h; sourceTree = "<group>"; };
+		55983BD41353216C00483DAC /* ApplicationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationHelper.m; sourceTree = "<group>"; };
 		55A2692E134C8D500051D97A /* CDataScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner.h; sourceTree = "<group>"; };
 		55A2692F134C8D500051D97A /* CDataScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDataScanner.m; sourceTree = "<group>"; };
 		55A26931134C8D500051D97A /* CDataScanner_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDataScanner_Extensions.h; sourceTree = "<group>"; };
@@ -309,6 +312,8 @@
 				55983BCC1351A3DE00483DAC /* Constants.m */,
 				55C02D4C134C775A00606C13 /* Supporting Files */,
 				55983BD213530CFA00483DAC /* Resources */,
+				55983BD31353216C00483DAC /* ApplicationHelper.h */,
+				55983BD41353216C00483DAC /* ApplicationHelper.m */,
 			);
 			path = GithubBrowser;
 			sourceTree = "<group>";
@@ -426,6 +431,7 @@
 				55983BC91350962A00483DAC /* SettingsViewController.m in Sources */,
 				55983BCD1351A3DE00483DAC /* Constants.m in Sources */,
 				55983BD11351A64100483DAC /* NSString+DBExtensions.m in Sources */,
+				55983BD51353216C00483DAC /* ApplicationHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

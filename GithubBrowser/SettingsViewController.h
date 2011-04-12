@@ -17,7 +17,6 @@
 }
 
 @property (nonatomic, retain) IBOutlet UITextField *usernameTextField;
-@property (nonatomic, retain) IBOutlet UITextField *passwordTextField;
 
 - (IBAction)save:(id)sender;
 

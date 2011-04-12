@@ -11,6 +11,7 @@
 @interface DetailViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate> {
 
     UIWebView *_webView;
+    UIBarButtonItem *titleBarButtonItem;
 }
 
 

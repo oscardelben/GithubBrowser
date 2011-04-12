@@ -13,7 +13,6 @@
 @implementation SettingsViewController
 
 @synthesize usernameTextField;
-@synthesize passwordTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,7 +26,6 @@
 - (void)dealloc
 {
     [usernameTextField release];
-    [passwordTextField release];
     [super dealloc];
 }
 
@@ -50,7 +48,6 @@
 - (void)viewDidUnload
 {
     [self setUsernameTextField:nil];
-    [self setPasswordTextField:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -66,12 +63,10 @@
     // TODO: disable save button if username or password is blank
     // TODO: check if login is valid
     NSString *username = usernameTextField.text;
-    NSString *password = passwordTextField.text;
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     [userDefaults setObject:username forKey:GBGithubUsername];
-    [userDefaults setObject:password forKey:GBGithubPassword];
 
     NSNotification *notification = [NSNotification notificationWithName:GBCredentialsChanged object:nil];
     

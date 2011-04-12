@@ -11,7 +11,6 @@
 #import "RootViewController.h"
 #import "FullScreenViewController.h"
 #import "SettingsViewController.h"
-#import "Constants.h"
 #import "NSString+DBExtensions.h"
 
 
@@ -66,9 +65,25 @@
 
 #pragma mark - Split view support
 
+- (void)setTitle
+{
+    NSString *username = [ApplicationHelper currentUsername];
+    
+    if (username && ![username blank]) 
+    {
+        titleBarButtonItem.title = username;
+    }
+    else
+    {
+        titleBarButtonItem.title = @"Select username";
+    }
+}
+
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController: (UIPopoverController *)pc
 {
-    barButtonItem.title = @"Repos";
+    titleBarButtonItem = barButtonItem;
+    [self setTitle];
+    
     NSMutableArray *items = [[self.toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [self.toolbar setItems:items animated:YES];
@@ -91,7 +106,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
 
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
@@ -104,17 +119,18 @@
     
     [fullScreenItem release];
     [spacer release];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(setTitle) name:GBCredentialsChanged object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *username = [userDefaults objectForKey:GBGithubUsername];
-    NSString *password = [userDefaults objectForKey:GBGithubPassword];
+    NSString *username = [ApplicationHelper currentUsername];
     
-    if (!username || [username blank] || !password || [password blank]) 
+    if (!username || [username blank]) 
     {
         SettingsViewController *viewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
         viewController.modalPresentationStyle = UIModalPresentationFormSheet;

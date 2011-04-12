@@ -9,6 +9,4 @@
 #import "Constants.h"
 
 NSString * const GBGithubUsername = @"GBGithubUsername";
-NSString * const GBGithubPassword = @"GBGithubPassword";
-
 NSString * const GBCredentialsChanged = @"GBCredentialsChanged";

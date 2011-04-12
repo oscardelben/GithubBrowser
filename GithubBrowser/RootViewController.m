@@ -10,7 +10,6 @@
 
 #import "DetailViewController.h"
 #import "NSString+DBExtensions.h"
-#import "Constants.h"
 
 @implementation RootViewController
 		
@@ -47,15 +46,15 @@
 
 - (void)reloadRepos
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *username = [userDefaults objectForKey:GBGithubUsername];
-    NSString *password = [userDefaults objectForKey:GBGithubPassword];
+    NSString *username = [ApplicationHelper currentUsername];
     
-    if (!username || [username blank] || !password || [password blank]) {
+    if (!username || [username blank]) {
         return;
     }
     
-    githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:password delegate:self withReachability:NO];
+    self.navigationItem.title = username;
+    
+    githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:nil delegate:self withReachability:NO];
     
     [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO];
 }
