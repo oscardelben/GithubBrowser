@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		550C7EAD1356393E009588FB /* private-fork.png in Resources */ = {isa = PBXBuildFile; fileRef = 550C7EAB1356393E009588FB /* private-fork.png */; };
+		550C7EAE1356393E009588FB /* public-fork.png in Resources */ = {isa = PBXBuildFile; fileRef = 550C7EAC1356393E009588FB /* public-fork.png */; };
 		55983BC91350962A00483DAC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BC71350962A00483DAC /* SettingsViewController.m */; };
 		55983BCA1350962A00483DAC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55983BC81350962A00483DAC /* SettingsViewController.xib */; };
 		55983BCD1351A3DE00483DAC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BCC1351A3DE00483DAC /* Constants.m */; };
@@ -56,6 +58,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		550C7EAB1356393E009588FB /* private-fork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "private-fork.png"; sourceTree = "<group>"; };
+		550C7EAC1356393E009588FB /* public-fork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "public-fork.png"; sourceTree = "<group>"; };
 		55983BC61350962A00483DAC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		55983BC71350962A00483DAC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		55983BC81350962A00483DAC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -259,6 +263,8 @@
 			children = (
 				55A26983134C95B70051D97A /* private.png */,
 				55A26984134C95B70051D97A /* public.png */,
+				550C7EAB1356393E009588FB /* private-fork.png */,
+				550C7EAC1356393E009588FB /* public-fork.png */,
 				55A26995134CC4CF0051D97A /* full_screen.png */,
 			);
 			name = Images;
@@ -388,6 +394,8 @@
 				55A26996134CC4CF0051D97A /* full_screen.png in Resources */,
 				55A269A0134E5FD50051D97A /* FullScreenViewController.xib in Resources */,
 				55983BCA1350962A00483DAC /* SettingsViewController.xib in Resources */,
+				550C7EAD1356393E009588FB /* private-fork.png in Resources */,
+				550C7EAE1356393E009588FB /* public-fork.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

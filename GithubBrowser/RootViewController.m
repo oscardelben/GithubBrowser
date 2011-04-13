@@ -26,6 +26,14 @@
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(reloadRepos) name:GBCredentialsChanged object:nil];
     
+    
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.hidesWhenStopped = YES;
+
+    UIBarButtonItem *loadButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    self.navigationItem.leftBarButtonItem = loadButton;
+    [loadButton release];
+    
     [self reloadRepos];
     
     // Todo: differentiate forks
@@ -46,6 +54,8 @@
 
 - (void)reloadRepos
 {
+    [activityIndicator startAnimating];
+    
     NSString *username = [ApplicationHelper currentUsername];
     
     if (!username || [username blank]) {
@@ -96,9 +106,18 @@
     cell.detailTextLabel.text = [repo valueForKey:@"description"];
     
     int private = [[repo valueForKey:@"private"] intValue];
+    int fork = [[repo valueForKey:@"fork"] intValue];
+
     if (private == 1) 
     {
-        cell.imageView.image = [UIImage imageNamed:@"private.png"];
+        if (fork == 1) 
+        {
+            cell.imageView.image = [UIImage imageNamed:@"private-fork.png"];
+        }
+        else
+        {
+            cell.imageView.image = [UIImage imageNamed:@"private.png"];
+        }
         
         // background color
         UIView *bg = [[UIView alloc] initWithFrame:cell.frame];
@@ -108,7 +127,14 @@
     } 
     else
     {
-        cell.imageView.image = [UIImage imageNamed:@"public.png"];
+        if (fork == 1) 
+        {
+            cell.imageView.image = [UIImage imageNamed:@"public-fork.png"];
+        }
+        else
+        {
+            cell.imageView.image = [UIImage imageNamed:@"public.png"];
+        }
     }
     
     // TODO: try to change cell height
@@ -128,6 +154,7 @@
     [detailViewController release];
     [githubEngine release];
     [repos release];
+    [activityIndicator release];
     [super dealloc];
 }
 
@@ -154,6 +181,8 @@
     
     self.repos = repositories;
     [self.tableView reloadData];
+    
+    [activityIndicator stopAnimating];
 }
 
 

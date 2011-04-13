@@ -11,7 +11,7 @@
 @class DetailViewController;
 
 @interface RootViewController : UITableViewController <UAGithubEngineDelegate> {
-
+    UIActivityIndicatorView *activityIndicator;
 }
 
 		
