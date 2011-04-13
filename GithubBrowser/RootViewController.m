@@ -36,7 +36,7 @@
     
     [self reloadRepos];
     
-    // Todo: differentiate forks
+    // Todo: add pagination
     // TODO: add errior handling (no internet, etc)
     // Todo: put a loding gif when loading
     // TODO: add error whehn internet connection is not available (use GithubEngine delegate method?)
