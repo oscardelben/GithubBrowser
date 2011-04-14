@@ -9,4 +9,5 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const GBGithubUsername;
+extern NSString * const GBGithubPassword;
 extern NSString * const GBCredentialsChanged;
