@@ -9,7 +9,6 @@
 #import "RootViewController.h"
 
 #import "DetailViewController.h"
-#import "NSString+DBExtensions.h"
 
 @implementation RootViewController
 		

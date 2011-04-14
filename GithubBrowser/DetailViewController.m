@@ -12,7 +12,7 @@
 #import "FullScreenViewController.h"
 #import "SettingsViewController.h"
 #import "NSString+DBExtensions.h"
-
+#import "SearchViewController.h"
 
 @interface DetailViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -111,9 +111,8 @@
     UIBarButtonItem *shortSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
     shortSpacer.width = 15;
     
-    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self action:nil];
-    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:self action:nil];
-    // Change to settings icon
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showHome)];
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"19-gear.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
         
     UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
@@ -157,6 +156,28 @@
 }
 
 # pragma mark
+
+- (void)showHome
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *currentUsername = [userDefaults valueForKey:GBGithubUsername];
+    [userDefaults setValue:currentUsername forKey:GBGithubCurrentUsername];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    
+    NSNotification *notification = [NSNotification notificationWithName:GBCredentialsChanged object:nil];
+    [notificationCenter postNotification:notification];
+}
+
+- (void)showSearch
+{
+    SearchViewController *viewController = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
+    viewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentModalViewController:viewController animated:YES];
+    
+    [viewController release];
+}
 
 - (void)showSettings
 {

@@ -13,7 +13,16 @@
 + (NSString *)currentUsername
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    return [userDefaults valueForKey:GBGithubUsername];
+    NSString *currentUsername = [userDefaults valueForKey:GBGithubCurrentUsername];
+
+    if (!currentUsername || [currentUsername blank]) 
+    {
+        return [userDefaults valueForKey:GBGithubUsername];
+    }
+    else
+    {
+        return currentUsername;
+    }
 }
 
 @end

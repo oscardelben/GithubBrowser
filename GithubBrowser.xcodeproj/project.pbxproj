@@ -12,6 +12,8 @@
 		557041CD13576CA30033D892 /* 19-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 557041CC13576CA30033D892 /* 19-gear.png */; };
 		557041D013576CFA0033D892 /* 06-magnify.png in Resources */ = {isa = PBXBuildFile; fileRef = 557041CF13576CFA0033D892 /* 06-magnify.png */; };
 		557041D213576D590033D892 /* 53-house.png in Resources */ = {isa = PBXBuildFile; fileRef = 557041D113576D590033D892 /* 53-house.png */; };
+		557041D6135783A10033D892 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557041D4135783A10033D892 /* SearchViewController.m */; };
+		557041D7135783A10033D892 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557041D5135783A10033D892 /* SearchViewController.xib */; };
 		55983BC91350962A00483DAC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BC71350962A00483DAC /* SettingsViewController.m */; };
 		55983BCA1350962A00483DAC /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55983BC81350962A00483DAC /* SettingsViewController.xib */; };
 		55983BCD1351A3DE00483DAC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 55983BCC1351A3DE00483DAC /* Constants.m */; };
@@ -66,6 +68,9 @@
 		557041CC13576CA30033D892 /* 19-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "19-gear.png"; sourceTree = "<group>"; };
 		557041CF13576CFA0033D892 /* 06-magnify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "06-magnify.png"; sourceTree = "<group>"; };
 		557041D113576D590033D892 /* 53-house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "53-house.png"; sourceTree = "<group>"; };
+		557041D3135783A10033D892 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		557041D4135783A10033D892 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		557041D5135783A10033D892 /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
 		55983BC61350962A00483DAC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		55983BC71350962A00483DAC /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		55983BC81350962A00483DAC /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -183,6 +188,7 @@
 				55983BC81350962A00483DAC /* SettingsViewController.xib */,
 				55C02D5D134C775B00606C13 /* DetailView.xib */,
 				55C02D57134C775B00606C13 /* MainWindow.xib */,
+				557041D5135783A10033D892 /* SearchViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -323,12 +329,14 @@
 				55A2699D134E5FD40051D97A /* FullScreenViewController.m */,
 				55983BC61350962A00483DAC /* SettingsViewController.h */,
 				55983BC71350962A00483DAC /* SettingsViewController.m */,
+				557041D3135783A10033D892 /* SearchViewController.h */,
+				557041D4135783A10033D892 /* SearchViewController.m */,
 				55983BCB1351A3DE00483DAC /* Constants.h */,
 				55983BCC1351A3DE00483DAC /* Constants.m */,
-				55C02D4C134C775A00606C13 /* Supporting Files */,
-				55983BD213530CFA00483DAC /* Resources */,
 				55983BD31353216C00483DAC /* ApplicationHelper.h */,
 				55983BD41353216C00483DAC /* ApplicationHelper.m */,
+				55C02D4C134C775A00606C13 /* Supporting Files */,
+				55983BD213530CFA00483DAC /* Resources */,
 			);
 			path = GithubBrowser;
 			sourceTree = "<group>";
@@ -408,6 +416,7 @@
 				557041CD13576CA30033D892 /* 19-gear.png in Resources */,
 				557041D013576CFA0033D892 /* 06-magnify.png in Resources */,
 				557041D213576D590033D892 /* 53-house.png in Resources */,
+				557041D7135783A10033D892 /* SearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +461,7 @@
 				55983BCD1351A3DE00483DAC /* Constants.m in Sources */,
 				55983BD11351A64100483DAC /* NSString+DBExtensions.m in Sources */,
 				55983BD51353216C00483DAC /* ApplicationHelper.m in Sources */,
+				557041D6135783A10033D892 /* SearchViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

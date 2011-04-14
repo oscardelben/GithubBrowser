@@ -15,4 +15,5 @@
 
 #import "UAGithubEngine.h"
 #import "Constants.h"
+#import "NSString+DBExtensions.h"
 #import "ApplicationHelper.h"

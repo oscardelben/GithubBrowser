@@ -21,6 +21,8 @@
 
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 
+- (void)showHome;
+- (void)showSearch;
 - (void)showSettings;
 
 @end
