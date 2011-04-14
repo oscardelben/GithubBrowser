@@ -106,19 +106,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Change the home button to a "home button"
+    UIBarButtonItem *shortSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+    shortSpacer.width = 15;
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:self action:nil];
+    // Change to settings icon
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"19-gear.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
         
     UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
 
-    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                               target:nil
-                               action:nil];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     // TODO: disable when no view is loaded
-    self.toolbar.items = [NSArray arrayWithObjects:spacer, fullScreenItem, nil];
+    self.toolbar.items = [NSArray arrayWithObjects:shortSpacer, homeButton,shortSpacer, searchButton,shortSpacer, settingsButton, spacer, fullScreenItem, nil];
     
-    [fullScreenItem release];
+    [shortSpacer release];
+    [homeButton release];
+    [searchButton release];
+    [settingsButton release];
     [spacer release];
+    [fullScreenItem release];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(setTitle) name:GBCredentialsChanged object:nil];
@@ -132,12 +142,7 @@
     
     if (!username || [username blank]) 
     {
-        SettingsViewController *viewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
-        viewController.modalPresentationStyle = UIModalPresentationFormSheet;
-    
-        [self presentModalViewController:viewController animated:YES];
-    
-        [viewController release];
+        [self showSettings];
     }
 }
 
@@ -151,7 +156,17 @@
 	self.popoverController = nil;
 }
 
-# pragma mark full screen
+# pragma mark
+
+- (void)showSettings
+{
+    SettingsViewController *viewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+    viewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentModalViewController:viewController animated:YES];
+    
+    [viewController release];
+}
 
 - (void)showFullScreen
 {

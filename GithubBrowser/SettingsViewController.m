@@ -22,6 +22,14 @@
 }
 
 
+- (void)viewDidLoad
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    usernameTextField.text = [userDefaults valueForKey:GBGithubUsername];
+    passwordTextField.text = [userDefaults valueForKey:GBGithubPassword];
+}
+
 - (void)viewDidUnload
 {
     [self setUsernameTextField:nil];

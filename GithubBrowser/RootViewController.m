@@ -36,11 +36,10 @@
     
     [self reloadRepos];
     
-    // Todo: add pagination
-    // TODO: add errior handling (no internet, etc)
-    // Todo: put a loding gif when loading
+    // Todo: add pagination for repos
+    // TODO: add errior handling (no internet, error loading repos, etc)
+    // Todo: put a loding gif when loading repo content
     // TODO: add error whehn internet connection is not available (use GithubEngine delegate method?)
-    // Todo: test with hundreds of repos, perhaps use pagination?
     // TODO: if the user is logged out from github, it shows a 404 page when accessing a private repo
 }
 

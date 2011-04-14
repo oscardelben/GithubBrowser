@@ -51,7 +51,7 @@
 						<string key="NSFrame">{{175, 180}, {191, 31}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="18799701"/>
+						<reference key="NSNextKeyView" ref="744298647"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -84,12 +84,12 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<string key="IBUIText">Username</string>
-						<object class="NSFont" key="IBUIFont" id="974167776">
+						<object class="NSFont" key="IBUIFont" id="633117491">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">17</double>
 							<int key="NSfFlags">16</int>
 						</object>
-						<object class="NSColor" key="IBUITextColor" id="548687367">
+						<object class="NSColor" key="IBUITextColor" id="787398432">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MCAwIDAAA</bytes>
 						</object>
@@ -97,7 +97,7 @@
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
 					</object>
-					<object class="IBUITextField" id="347773886">
+					<object class="IBUITextField" id="888084580">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{175, 219}, {191, 31}}</string>
@@ -118,24 +118,25 @@
 						<bool key="IBUIAdjustsFontSizeToFit">YES</bool>
 						<float key="IBUIMinimumFontSize">17</float>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
+							<bool key="IBUISecureTextEntry">YES</bool>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 					</object>
-					<object class="IBUILabel" id="18799701">
+					<object class="IBUILabel" id="744298647">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{87, 224}, {79, 21}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="347773886"/>
+						<reference key="NSNextKeyView" ref="888084580"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<string key="IBUIText">Password</string>
-						<reference key="IBUIFont" ref="974167776"/>
-						<reference key="IBUITextColor" ref="548687367"/>
+						<reference key="IBUIFont" ref="633117491"/>
+						<reference key="IBUITextColor" ref="787398432"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
@@ -171,7 +172,7 @@
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
 					</object>
-					<object class="IBUITextView" id="737844016">
+					<object class="IBUITextView" id="880690708">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 20}, {500, 128}}</string>
@@ -187,7 +188,7 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
 						<string key="IBUIText">Type your username and password to quickly access your account. Password is optional, but it allows you to view your private repos (you'll stil have to login though github first to use them)</string>
-						<reference key="IBUIFont" ref="974167776"/>
+						<reference key="IBUIFont" ref="633117491"/>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIAutocapitalizationType">2</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -197,7 +198,7 @@
 				<string key="NSFrameSize">{540, 576}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="737844016"/>
+				<reference key="NSNextKeyView" ref="880690708"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -243,7 +244,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">passwordTextField</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="347773886"/>
+						<reference key="destination" ref="888084580"/>
 					</object>
 					<int key="connectionID">15</int>
 				</object>
@@ -276,9 +277,9 @@
 							<reference ref="231430476"/>
 							<reference ref="575083931"/>
 							<reference ref="636136798"/>
-							<reference ref="347773886"/>
-							<reference ref="18799701"/>
-							<reference ref="737844016"/>
+							<reference ref="888084580"/>
+							<reference ref="744298647"/>
+							<reference ref="880690708"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">View</string>
@@ -300,17 +301,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">12</int>
-						<reference key="object" ref="347773886"/>
+						<reference key="object" ref="888084580"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">13</int>
-						<reference key="object" ref="18799701"/>
+						<reference key="object" ref="744298647"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">14</int>
-						<reference key="object" ref="737844016"/>
+						<reference key="object" ref="880690708"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
 				</object>
