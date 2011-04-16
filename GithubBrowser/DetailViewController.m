@@ -13,6 +13,7 @@
 #import "SettingsViewController.h"
 #import "NSString+DBExtensions.h"
 #import "SearchViewController.h"
+#import "NSData+Additions.h"
 
 @interface DetailViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -54,7 +55,21 @@
     // Update the user interface for the detail item.
 
     NSURL *url = [NSURL URLWithString:[self.detailItem valueForKey:@"url"]];
-    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    
+    // Add auth
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *email = [userDefaults valueForKey:GBGithubUsername];
+    NSString *password = [userDefaults valueForKey:GBGithubPassword];;
+    
+    NSString *authString = [[[NSString stringWithFormat:@"%@:%@", email, password] dataUsingEncoding:NSUTF8StringEncoding] base64Encoding];
+        
+    authString = [NSString stringWithFormat: @"Basic %@", authString];
+    
+    [req setValue:authString forHTTPHeaderField:@"Authorization"];
+    
+    // Load request
     
     [self.webView loadRequest:req];
 }

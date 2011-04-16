@@ -49,8 +49,6 @@
     
     // Todo: add pagination for repos
     // TODO: add errior handling (no internet, error loading repos, etc)
-    // TODO: add error whehn internet connection is not available (use GithubEngine delegate method?)
-    // TODO: if the user is logged out from github, it shows a 404 page when accessing a private repo
 }
 
 - (void)viewDidUnload
