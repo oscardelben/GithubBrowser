@@ -30,8 +30,13 @@
     activityIndicator.hidesWhenStopped = YES;
 
     UIBarButtonItem *loadButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)];    
+    
     self.navigationItem.leftBarButtonItem = loadButton;
+    self.navigationItem.rightBarButtonItem = actionButton;
+    
     [loadButton release];
+    [actionButton release];
     
     [self reloadRepos];
     
@@ -48,6 +53,25 @@
     [notificationCenter removeObserver:self];
     
     [super viewDidUnload];
+}
+
+- (void)showActionSheet
+{
+    NSArray *otherTitles = [NSArray arrayWithObjects:@"Show user information", @"Follow user", @"Send to Email", @"Send Message", nil];
+    
+    // for current user: create repo, ...
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    
+    for (int i = 0; i < [otherTitles count]; i++) 
+    {
+        [actionSheet addButtonWithTitle:[otherTitles objectAtIndex:i]];
+    }
+    
+    [actionSheet showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
+
+    [actionSheet release];
+
 }
 
 - (void)reloadRepos

@@ -20,6 +20,7 @@
 @property (nonatomic, retain) UAGithubEngine *githubEngine;
 @property (nonatomic, retain) NSArray *repos;
 
+- (void)showActionSheet;
 - (void)reloadRepos;
 
 @end
