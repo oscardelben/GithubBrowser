@@ -16,19 +16,9 @@
 @synthesize githubEngine;
 @synthesize repos;
 
-- (void)viewDidLoad
+
+-(void)configureButtons
 {
-    [super viewDidLoad];
-    self.clearsSelectionOnViewWillAppear = NO;
-    self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
-
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(reloadRepos) name:GBCredentialsChanged object:nil];
-    
-    
-    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator.hidesWhenStopped = YES;
-
     UIBarButtonItem *loadButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
     UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)];    
     
@@ -37,12 +27,28 @@
     
     [loadButton release];
     [actionButton release];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.clearsSelectionOnViewWillAppear = NO;
+    self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(reloadRepos) name:GBCredentialsChanged object:nil];
+    [notificationCenter addObserver:self selector:@selector(showLoadIndicator) name:GBShowLoadIndicator object:nil];
+    [notificationCenter addObserver:self selector:@selector(hideLoadIndicator) name:GBHideLoadIndicator object:nil];
+    
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.hidesWhenStopped = YES;
+
+    [self configureButtons];
     
     [self reloadRepos];
     
     // Todo: add pagination for repos
     // TODO: add errior handling (no internet, error loading repos, etc)
-    // Todo: put a loding gif when loading repo content
     // TODO: add error whehn internet connection is not available (use GithubEngine delegate method?)
     // TODO: if the user is logged out from github, it shows a 404 page when accessing a private repo
 }
@@ -53,42 +59,6 @@
     [notificationCenter removeObserver:self];
     
     [super viewDidUnload];
-}
-
-- (void)showActionSheet
-{
-    NSArray *otherTitles = [NSArray arrayWithObjects:@"Show user information", @"Follow user", @"Send to Email", @"Send Message", nil];
-    
-    // for current user: create repo, ...
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-    
-    for (int i = 0; i < [otherTitles count]; i++) 
-    {
-        [actionSheet addButtonWithTitle:[otherTitles objectAtIndex:i]];
-    }
-    
-    [actionSheet showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
-
-    [actionSheet release];
-
-}
-
-- (void)reloadRepos
-{
-    [activityIndicator startAnimating];
-    
-    NSString *username = [ApplicationHelper currentUsername];
-    
-    if (!username || [username blank]) {
-        return;
-    }
-    
-    self.navigationItem.title = username;
-    
-    githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:nil delegate:self withReachability:NO];
-    
-    [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -165,7 +135,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{    
     NSDictionary *currentRepo = [self.repos objectAtIndex:indexPath.row];
 
     detailViewController.detailItem = currentRepo;
@@ -180,6 +150,53 @@
     [super dealloc];
 }
 
+#pragma mark Utility methods
+
+- (void)showActionSheet
+{
+    NSArray *otherTitles = [NSArray arrayWithObjects:@"Show user information", @"Follow user", @"Send to Email", @"Send Message", nil];
+    
+    // for current user: create repo, ...
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    
+    for (int i = 0; i < [otherTitles count]; i++) 
+    {
+        [actionSheet addButtonWithTitle:[otherTitles objectAtIndex:i]];
+    }
+    
+    [actionSheet showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
+    
+    [actionSheet release];
+    
+}
+
+- (void)reloadRepos
+{
+    [self showLoadIndicator];
+    
+    NSString *username = [ApplicationHelper currentUsername];
+    
+    if (!username || [username blank]) {
+        return;
+    }
+    
+    self.navigationItem.title = username;
+    
+    githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:nil delegate:self withReachability:NO];
+    
+    [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO];
+}
+
+- (void)showLoadIndicator
+{
+    [activityIndicator startAnimating];
+}
+
+- (void)hideLoadIndicator
+{
+    [activityIndicator stopAnimating];
+}
 
 #pragma mark UAGithubEngineDelegate Methods
 
@@ -204,7 +221,7 @@
     self.repos = repositories;
     [self.tableView reloadData];
     
-    [activityIndicator stopAnimating];
+    [self hideLoadIndicator];
 }
 
 

@@ -52,7 +52,7 @@
 - (void)configureView
 {
     // Update the user interface for the detail item.
-    
+
     NSURL *url = [NSURL URLWithString:[self.detailItem valueForKey:@"url"]];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     
@@ -106,6 +106,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.webView.delegate = self;
     
     // Change the home button to a "home button"
     UIBarButtonItem *shortSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
@@ -183,8 +185,10 @@
 - (void)showSettings
 {
     SettingsViewController *viewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    [self presentModalViewController:viewController animated:YES];
+    [self presentModalViewController:navController animated:YES];
     
     [viewController release];
 }
@@ -213,6 +217,24 @@
     [_detailItem release];
     [_webView release];
     [super dealloc];
+}
+
+#pragma mark - UIWebViewDelegate methods
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    NSNotification *notification = [NSNotification notificationWithName:GBShowLoadIndicator object:nil];
+    
+    [notificationCenter postNotification:notification];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    NSNotification *notification = [NSNotification notificationWithName:GBHideLoadIndicator object:nil];
+    
+    [notificationCenter postNotification:notification];
 }
 
 @end

@@ -28,6 +28,10 @@
     
     usernameTextField.text = [userDefaults valueForKey:GBGithubUsername];
     passwordTextField.text = [userDefaults valueForKey:GBGithubPassword];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    [cancelButton release];
 }
 
 - (void)viewDidUnload
@@ -43,6 +47,11 @@
 {
     // Return YES for supported orientations
 	return YES;
+}
+
+- (void)cancel
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)save:(id)sender {

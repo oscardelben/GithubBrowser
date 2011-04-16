@@ -10,5 +10,9 @@
 
 extern NSString * const GBGithubUsername;
 extern NSString * const GBGithubPassword;
+
 extern NSString * const GBGithubCurrentUsername;
+
 extern NSString * const GBCredentialsChanged;
+extern NSString * const GBShowLoadIndicator;
+extern NSString * const GBHideLoadIndicator;

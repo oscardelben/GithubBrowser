@@ -23,4 +23,7 @@
 - (void)showActionSheet;
 - (void)reloadRepos;
 
+- (void)showLoadIndicator;
+- (void)hideLoadIndicator;
+
 @end
