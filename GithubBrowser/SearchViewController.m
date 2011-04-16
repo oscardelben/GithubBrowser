@@ -21,6 +21,14 @@
 }
 
 #pragma mark - View lifecycle
+
+- (void)viewDidLoad
+{
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    [cancelButton release];
+}
+
 - (void)viewDidUnload
 {
     self.usernameTextField = nil;
@@ -33,6 +41,11 @@
 {
     // Return YES for supported orientations
 	return YES;
+}
+
+- (IBAction)cancel
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (IBAction)save:(id)sender

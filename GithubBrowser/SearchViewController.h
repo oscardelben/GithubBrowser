@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) IBOutlet UITextField *usernameTextField;
 
+- (IBAction)cancel;
 - (IBAction)save:(id)sender;
 
 @end

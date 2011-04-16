@@ -172,9 +172,10 @@
 - (void)showSearch
 {
     SearchViewController *viewController = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
-    viewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    [self presentModalViewController:viewController animated:YES];
+    [self presentModalViewController:navController animated:YES];
     
     [viewController release];
 }
@@ -182,7 +183,6 @@
 - (void)showSettings
 {
     SettingsViewController *viewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
-    viewController.modalPresentationStyle = UIModalPresentationFormSheet;
     
     [self presentModalViewController:viewController animated:YES];
     
