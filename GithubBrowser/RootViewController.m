@@ -9,6 +9,8 @@
 #import "RootViewController.h"
 
 #import "DetailViewController.h"
+#import "SearchViewController.h"
+#import "SettingsViewController.h"
 
 @implementation RootViewController
 		
@@ -19,6 +21,7 @@
 
 -(void)configureButtons
 {
+    // navigation bar
     UIBarButtonItem *loadButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
     UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)];    
     
@@ -27,6 +30,23 @@
     
     [loadButton release];
     [actionButton release];
+    
+    // toolbar
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showHome)];
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showSearch)];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"19-gear.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showSettings)];
+    
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    self.navigationController.toolbar.items = [NSArray arrayWithObjects:homeButton, spacer, searchButton, spacer, settingsButton, nil];
+    self.navigationController.toolbarHidden = NO;
+    self.navigationController.toolbar.barStyle = UIBarStyleDefault;
+    
+    [homeButton release];
+    [searchButton release];
+    [settingsButton release];
+    [spacer release];
 }
 
 - (void)viewDidLoad
@@ -48,7 +68,7 @@
     [self reloadRepos];
     
     // Todo: add pagination for repos
-    // TODO: add errior handling (no internet, error loading repos, etc)
+    // TODO: add error handling (no internet, error loading repos, etc)
 }
 
 - (void)viewDidUnload

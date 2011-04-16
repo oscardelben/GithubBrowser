@@ -13,7 +13,7 @@
 #import "SettingsViewController.h"
 #import "NSString+DBExtensions.h"
 #import "SearchViewController.h"
-#import "NSData+Additions.h"
+#import "NSMutableURLRequest+BasicAuth.h"
 
 @interface DetailViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -60,14 +60,10 @@
     // Add auth
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *email = [userDefaults valueForKey:GBGithubUsername];
+    NSString *username = [userDefaults valueForKey:GBGithubUsername];
     NSString *password = [userDefaults valueForKey:GBGithubPassword];;
     
-    NSString *authString = [[[NSString stringWithFormat:@"%@:%@", email, password] dataUsingEncoding:NSUTF8StringEncoding] base64Encoding];
-        
-    authString = [NSString stringWithFormat: @"Basic %@", authString];
-    
-    [req setValue:authString forHTTPHeaderField:@"Authorization"];
+    [req addBasicAuth:username andPassword:password];
     
     // Load request
     
@@ -123,26 +119,14 @@
     [super viewDidLoad];
     
     self.webView.delegate = self;
-    
-    // Change the home button to a "home button"
-    UIBarButtonItem *shortSpacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-    shortSpacer.width = 15;
-    
-    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showHome)];
-    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showSearch)];
-    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"19-gear.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showSettings)];
         
     UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
 
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     // TODO: disable when no view is loaded
-    self.toolbar.items = [NSArray arrayWithObjects:shortSpacer, homeButton,shortSpacer, searchButton,shortSpacer, settingsButton, spacer, fullScreenItem, nil];
-    
-    [shortSpacer release];
-    [homeButton release];
-    [searchButton release];
-    [settingsButton release];
+    self.toolbar.items = [NSArray arrayWithObjects:spacer, fullScreenItem, nil];
+
     [spacer release];
     [fullScreenItem release];
     
