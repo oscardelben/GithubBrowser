@@ -15,4 +15,6 @@
 
 + (NSString *)currentUsername;
 
++ (NSString *)password;
+
 @end

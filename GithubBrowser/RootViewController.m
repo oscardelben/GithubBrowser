@@ -203,12 +203,14 @@
         return;
     }
     
+    NSString *password = [ApplicationHelper password];
+    
     self.navigationItem.title = username;
     
     currentPage = 1;
     self.repos = [NSMutableArray array];
     
-    githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:nil delegate:self withReachability:NO];
+    githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:password delegate:self withReachability:NO];
     
     [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:currentPage];
 }

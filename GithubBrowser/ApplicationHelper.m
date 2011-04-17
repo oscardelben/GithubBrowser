@@ -25,4 +25,10 @@
     }
 }
 
++ (NSString *)password
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    return [userDefaults valueForKey:GBGithubPassword];
+}
+
 @end
