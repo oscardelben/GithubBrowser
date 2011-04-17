@@ -30,6 +30,11 @@
     
     [loadButton release];
     [actionButton release];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
     // toolbar
     
@@ -39,9 +44,8 @@
     
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    self.navigationController.toolbar.items = [NSArray arrayWithObjects:homeButton, spacer, searchButton, spacer, settingsButton, nil];
+    self.toolbarItems = [NSArray arrayWithObjects:homeButton, spacer, searchButton, spacer, settingsButton, nil];
     self.navigationController.toolbarHidden = NO;
-    self.navigationController.toolbar.barStyle = UIBarStyleDefault;
     
     [homeButton release];
     [searchButton release];
