@@ -201,9 +201,12 @@
     
     self.navigationItem.title = username;
     
+    currentPage = 1;
+    self.repos = [NSMutableArray array];
+    
     githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:nil delegate:self withReachability:NO];
     
-    [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO];
+    [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:currentPage];
 }
 
 - (void)showLoadIndicator
@@ -233,13 +236,20 @@
 #pragma mark Github api
 
 - (void)repositoriesReceived:(NSArray *)repositories forConnection:(NSString *)connectionIdentifier
-{
-    NSLog(@"%@", repositories);
-    
-    self.repos = repositories;
-    [self.tableView reloadData];
-    
-    [self hideLoadIndicator];
+{   
+    [self.repos addObjectsFromArray:repositories];
+
+    if ([repositories count] == 0)
+    {
+        [self.tableView reloadData];
+        
+        [self hideLoadIndicator];
+    } 
+    else
+    {
+        currentPage += 1;
+        [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:currentPage];
+    }
 }
 
 

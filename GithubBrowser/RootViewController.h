@@ -12,13 +12,15 @@
 
 @interface RootViewController : UITableViewController <UAGithubEngineDelegate> {
     UIActivityIndicatorView *activityIndicator;
+    
+    int currentPage;
 }
 
 		
 @property (nonatomic, retain) IBOutlet DetailViewController *detailViewController;
 
 @property (nonatomic, retain) UAGithubEngine *githubEngine;
-@property (nonatomic, retain) NSArray *repos;
+@property (nonatomic, retain) NSMutableArray *repos;
 
 - (void)showActionSheet;
 - (void)reloadRepos;
