@@ -245,6 +245,12 @@
 
     if ([repositories count] == 0)
     {
+
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"pushed_at" ascending:NO];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+
+        [self.repos sortUsingDescriptors:sortDescriptors];
+                
         [self.tableView reloadData];
         
         [self hideLoadIndicator];
