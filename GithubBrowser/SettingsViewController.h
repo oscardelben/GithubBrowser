@@ -17,6 +17,6 @@
 @property (nonatomic, retain) IBOutlet UITextField *passwordTextField;
 
 - (void)cancel;
-- (IBAction)save:(id)sender;
+- (IBAction)save;
 
 @end

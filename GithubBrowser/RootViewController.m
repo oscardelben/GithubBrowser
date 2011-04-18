@@ -241,11 +241,13 @@
 
 #pragma mark Github api
 
+#define MAX_PAGES 10
+
 - (void)repositoriesReceived:(NSArray *)repositories forConnection:(NSString *)connectionIdentifier
 {   
     [self.repos addObjectsFromArray:repositories];
 
-    if ([repositories count] == 0)
+    if ([repositories count] == 0 || self.currentPage > MAX_PAGES)
     {
 
         NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"pushed_at" ascending:NO];

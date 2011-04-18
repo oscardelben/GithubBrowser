@@ -20,6 +20,7 @@
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 @property (nonatomic, retain) UIBarButtonItem *loadButtonItem;
 @property (nonatomic, retain) NSString *matchedUsername;
+@property (nonatomic, assign) BOOL isFullScreen;
 
 - (void)showHome;
 - (void)showSearch;

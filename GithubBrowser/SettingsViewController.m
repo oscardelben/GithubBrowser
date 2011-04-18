@@ -30,8 +30,13 @@
     passwordTextField.text = [userDefaults valueForKey:GBGithubPassword];
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(save)];
+    
     self.navigationItem.leftBarButtonItem = cancelButton;
+    self.navigationItem.rightBarButtonItem = saveButton;
+    
     [cancelButton release];
+    [saveButton release];
 }
 
 - (void)viewDidUnload
@@ -54,9 +59,9 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (IBAction)save:(id)sender {
+- (IBAction)save {
     // TODO: disable save button if username or password is blank
-    // TODO: check if login is valid
+
     NSString *username = usernameTextField.text;
     NSString *password = passwordTextField.text;
     

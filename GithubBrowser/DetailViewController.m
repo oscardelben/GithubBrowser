@@ -9,7 +9,6 @@
 #import "DetailViewController.h"
 
 #import "RootViewController.h"
-#import "FullScreenViewController.h"
 #import "SettingsViewController.h"
 #import "NSString+DBExtensions.h"
 #import "SearchViewController.h"
@@ -28,6 +27,8 @@
 
 @synthesize loadButtonItem;
 @synthesize matchedUsername;
+
+@synthesize isFullScreen;
 
 #pragma mark - Managing the detail item
 
@@ -92,18 +93,17 @@
 
 - (void)configureToolbar
 {
-    UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
+    //UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
     
-    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    //UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     loadButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(loadMatchedUserRepos)];
     loadButtonItem.enabled = NO;
     
-    // TODO: disable when no view is loaded
-    self.toolbar.items = [NSArray arrayWithObjects:loadButtonItem, spacer, fullScreenItem, nil];
+    self.toolbar.items = [NSArray arrayWithObjects:loadButtonItem, nil];
     
-    [spacer release];
-    [fullScreenItem release];
+    //[spacer release];
+    //[fullScreenItem release];
 }
 
  // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -199,17 +199,22 @@
 
 - (void)showFullScreen
 {
-    FullScreenViewController *fullScreenViewController = [[FullScreenViewController alloc] initWithNibName:@"FullScreenViewController" bundle:nil];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:fullScreenViewController];
-
-    fullScreenViewController.parentController = self;
+    UIViewController *splitViewController = self.parentViewController;
     
-
-    navController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentModalViewController:navController animated:YES];
-    
-    [fullScreenViewController release];
-    [navController release];
+    if (self.isFullScreen) 
+    {
+        splitViewController.modalPresentationStyle = UIModalPresentationPageSheet;
+        [splitViewController dismissModalViewControllerAnimated:NO];
+        
+        self.isFullScreen = NO;
+    }
+    else
+    {
+        splitViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+        [splitViewController presentModalViewController:self animated:NO];
+        
+        self.isFullScreen = YES;
+    }
 }
 
 - (void)loadUsernameFromWebView:(UIWebView *)webView
