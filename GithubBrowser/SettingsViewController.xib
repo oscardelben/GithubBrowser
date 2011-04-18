@@ -187,7 +187,7 @@
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<bool key="IBUIShowsHorizontalScrollIndicator">NO</bool>
-						<string key="IBUIText">Type your username and password to quickly access your account. Password is optional, but it allows you to view your private repos (you'll stil have to login though github first to use them)</string>
+						<string key="IBUIText">Type your username and password to quickly access your account. Password is optional, but it allows you to view your private repos and be automatically logged-in in Github.</string>
 						<reference key="IBUIFont" ref="633117491"/>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIAutocapitalizationType">2</int>
