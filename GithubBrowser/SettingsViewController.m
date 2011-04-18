@@ -60,15 +60,7 @@
     NSString *username = usernameTextField.text;
     NSString *password = passwordTextField.text;
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    [userDefaults setObject:username forKey:GBGithubUsername];
-    [userDefaults setObject:password forKey:GBGithubPassword];
-
-    NSNotification *notification = [NSNotification notificationWithName:GBCredentialsChanged object:nil];
-    
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter postNotification:notification];
+    [ApplicationHelper saveCredentials:username password:password notifyOfChange:YES];
     
     [self dismissModalViewControllerAnimated:YES];
 }

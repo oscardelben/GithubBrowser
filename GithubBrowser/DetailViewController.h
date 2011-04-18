@@ -16,13 +16,14 @@
 
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
-
 @property (nonatomic, retain) id detailItem;
-
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) UIBarButtonItem *loadButtonItem;
+@property (nonatomic, retain) NSString *matchedUsername;
 
 - (void)showHome;
 - (void)showSearch;
 - (void)showSettings;
+- (void)loadMatchedUserRepos;
 
 @end

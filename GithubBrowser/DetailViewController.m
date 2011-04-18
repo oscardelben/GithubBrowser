@@ -23,12 +23,12 @@
 @implementation DetailViewController
 
 @synthesize toolbar=_toolbar;
-
 @synthesize detailItem=_detailItem;
-
 @synthesize webView = _webView;
-
 @synthesize popoverController=_myPopoverController;
+
+@synthesize loadButtonItem;
+@synthesize matchedUsername;
 
 #pragma mark - Managing the detail item
 
@@ -112,6 +112,21 @@
     self.popoverController = nil;
 }
 
+- (void)configureToolbar
+{
+    UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
+    
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    loadButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(loadMatchedUserRepos)];
+    loadButtonItem.enabled = NO;
+    
+    // TODO: disable when no view is loaded
+    self.toolbar.items = [NSArray arrayWithObjects:loadButtonItem, spacer, fullScreenItem, nil];
+    
+    [spacer release];
+    [fullScreenItem release];
+}
 
  // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
@@ -120,15 +135,7 @@
     
     self.webView.delegate = self;
         
-    UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
-
-    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    // TODO: disable when no view is loaded
-    self.toolbar.items = [NSArray arrayWithObjects:spacer, fullScreenItem, nil];
-
-    [spacer release];
-    [fullScreenItem release];
+    [self configureToolbar];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(setTitle) name:GBCredentialsChanged object:nil];
@@ -156,18 +163,33 @@
 	self.popoverController = nil;
 }
 
-# pragma mark
+#pragma mark loadButtonItem
+
+- (void)hideLoadButtonItem
+{
+    self.matchedUsername = @"";
+    loadButtonItem.title = @"";
+    loadButtonItem.enabled = NO;
+    loadButtonItem.style = UIBarButtonItemStylePlain;
+}
+
+- (void)showLoadButtonItem
+{
+    // Only show if different than current username
+    if ([self.matchedUsername isEqualToString:[ApplicationHelper currentUsername]])
+        return;
+    
+    loadButtonItem.title = [NSString stringWithFormat:@"Load %@", self.matchedUsername];
+    loadButtonItem.enabled = YES;
+    loadButtonItem.style = UIBarButtonItemStyleBordered;
+}
+
+# pragma mark actions
 
 - (void)showHome
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *currentUsername = [userDefaults valueForKey:GBGithubUsername];
-    [userDefaults setValue:currentUsername forKey:GBGithubCurrentUsername];
-    
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    
-    NSNotification *notification = [NSNotification notificationWithName:GBCredentialsChanged object:nil];
-    [notificationCenter postNotification:notification];
+    NSString *username = [ApplicationHelper username];
+    [ApplicationHelper setCurrentUsername:username notifyOfChange:YES];
 }
 
 - (void)showSearch
@@ -207,6 +229,47 @@
     [navController release];
 }
 
+- (void)loadUsernameFromWebView:(UIWebView *)webView
+{
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"https://github.com/(.+)/(.+)"
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    
+    NSString *string = [[webView.request URL] absoluteString];
+    
+    NSArray *matches = [regex matchesInString:string           
+                                      options:0
+                                        range:NSMakeRange(0, [string length])];
+    
+    if ([matches count] > 0) 
+    {
+        // show button
+        NSTextCheckingResult *match = [matches objectAtIndex:0];
+        
+        NSRange firstHalfRange = [match rangeAtIndex:1];
+        NSString *username = [string substringWithRange:firstHalfRange];
+
+        // Check if username is valid
+        if ([ApplicationHelper validUsername:username])
+        {
+            self.matchedUsername = [string substringWithRange:firstHalfRange];
+            
+            [self showLoadButtonItem];
+        }
+    } else
+    {
+        [self hideLoadButtonItem];
+    }
+    
+}
+
+- (void)loadMatchedUserRepos
+{
+    [ApplicationHelper setCurrentUsername:self.matchedUsername notifyOfChange:YES];
+    [self hideLoadButtonItem];
+}
+
 #pragma mark - Memory management
 
 - (void)dealloc
@@ -215,6 +278,8 @@
     [_toolbar release];
     [_detailItem release];
     [_webView release];
+    [loadButtonItem release];
+    [matchedUsername release];
     [super dealloc];
 }
 
@@ -230,6 +295,8 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    [self loadUsernameFromWebView:webView];
+    
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     NSNotification *notification = [NSNotification notificationWithName:GBHideLoadIndicator object:nil];
     
