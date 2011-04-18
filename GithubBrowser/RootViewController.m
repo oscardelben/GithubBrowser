@@ -150,6 +150,11 @@
         {
             cell.imageView.image = [UIImage imageNamed:@"public.png"];
         }
+        
+        UIView *bg = [[UIView alloc] initWithFrame:cell.frame];
+        bg.backgroundColor = [UIColor whiteColor];
+        cell.backgroundView = bg;
+        [bg release];
     }
     
     // TODO: try to change cell height
