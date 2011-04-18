@@ -10,10 +10,7 @@
 
 @class DetailViewController;
 
-@interface RootViewController : UITableViewController <UAGithubEngineDelegate> {
-    UIActivityIndicatorView *activityIndicator;
-    
-    int currentPage;
+@interface RootViewController : UITableViewController <UAGithubEngineDelegate, UIActionSheetDelegate> {
 }
 
 		
@@ -22,9 +19,12 @@
 @property (nonatomic, retain) UAGithubEngine *githubEngine;
 @property (nonatomic, retain) NSMutableArray *repos;
 
-- (void)showActionSheet;
-- (void)reloadRepos;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, retain) UIBarButtonItem *searchButton;
+@property (nonatomic, assign) int currentPage;
 
+- (void)showSearchSheet;
+- (void)reloadRepos;
 - (void)showLoadIndicator;
 - (void)hideLoadIndicator;
 

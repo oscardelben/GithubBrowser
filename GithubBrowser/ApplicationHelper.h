@@ -18,9 +18,12 @@
 + (NSString *)password;
 
 + (BOOL)validUsername:(NSString *)username;
++ (BOOL)usingDefaultUser;
 
 + (void)sendCredentialsChangedNotification;
 + (void)saveCredentials:(NSString *)username password:(NSString *)password notifyOfChange:(BOOL)notify;
 + (void)setCurrentUsername:(NSString *)username notifyOfChange:(BOOL)notify;
+
++ (void)loadWebViewFromUrl:(UIWebView *)webView url:(NSString *)string;
 
 @end

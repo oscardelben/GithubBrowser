@@ -7,6 +7,7 @@
 //
 
 #import "ApplicationHelper.h"
+#import "NSMutableURLRequest+BasicAuth.h"
 
 @implementation ApplicationHelper
 
@@ -36,10 +37,8 @@
     // Only return password if we're fetching the primary user
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    NSString *currentUsername = [self currentUsername];
-    NSString *username = [self username];
 
-    if ([currentUsername isEqualToString:username]) 
+    if ([self usingDefaultUser]) 
     {
         return [userDefaults valueForKey:GBGithubPassword];
     }
@@ -47,6 +46,14 @@
     {
         return nil;
     }
+}
+
++ (BOOL)usingDefaultUser
+{    
+    NSString *currentUsername = [self currentUsername];
+    NSString *username = [self username];
+    
+    return [currentUsername isEqualToString:username];
 }
 
 + (BOOL)validUsername:(NSString *)username
@@ -84,6 +91,24 @@
     {
         [self sendCredentialsChangedNotification];
     }
+}
+
++ (void)loadWebViewFromUrl:(UIWebView *)webView url:(NSString *)string;
+{
+    NSURL *url = [NSURL URLWithString:string];
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
+    
+    // Add auth
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *username = [userDefaults valueForKey:GBGithubUsername];
+    NSString *password = [userDefaults valueForKey:GBGithubPassword];;
+    
+    [req addBasicAuth:username andPassword:password];
+    
+    // Load request
+    
+    [webView loadRequest:req];
 }
 
 @end

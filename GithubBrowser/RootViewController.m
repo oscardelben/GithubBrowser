@@ -15,21 +15,23 @@
 @implementation RootViewController
 		
 @synthesize detailViewController;
+
 @synthesize githubEngine;
 @synthesize repos;
+
+@synthesize activityIndicator;
+@synthesize searchButton;
+@synthesize currentPage;
 
 
 -(void)configureButtons
 {
     // navigation bar
     UIBarButtonItem *loadButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
-    UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActionSheet)];    
     
     self.navigationItem.leftBarButtonItem = loadButton;
-    self.navigationItem.rightBarButtonItem = actionButton;
     
     [loadButton release];
-    [actionButton release];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -39,7 +41,7 @@
     // toolbar
     
     UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showHome)];
-    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showSearch)];
+    searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showSearchSheet)];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"19-gear.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showSettings)];
     
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -48,7 +50,6 @@
     self.navigationController.toolbarHidden = NO;
     
     [homeButton release];
-    [searchButton release];
     [settingsButton release];
     [spacer release];
 }
@@ -64,8 +65,8 @@
     [notificationCenter addObserver:self selector:@selector(showLoadIndicator) name:GBShowLoadIndicator object:nil];
     [notificationCenter addObserver:self selector:@selector(hideLoadIndicator) name:GBHideLoadIndicator object:nil];
     
-    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator.hidesWhenStopped = YES;
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator.hidesWhenStopped = YES;
 
     [self configureButtons];
     
@@ -169,16 +170,15 @@
     [githubEngine release];
     [repos release];
     [activityIndicator release];
+    [searchButton release];
     [super dealloc];
 }
 
 #pragma mark Utility methods
 
-- (void)showActionSheet
+- (void)showSearchSheet
 {
-    NSArray *otherTitles = [NSArray arrayWithObjects:@"Show user information", @"Follow user", @"Send to Email", @"Send Message", nil];
-    
-    // for current user: create repo, ...
+    NSArray *otherTitles = [NSArray arrayWithObjects:@"Search user", @"Random repo", nil];
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
     
@@ -187,10 +187,9 @@
         [actionSheet addButtonWithTitle:[otherTitles objectAtIndex:i]];
     }
     
-    [actionSheet showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
+    [actionSheet showFromBarButtonItem:self.searchButton animated:YES];
     
     [actionSheet release];
-    
 }
 
 - (void)reloadRepos
@@ -207,22 +206,23 @@
     
     self.navigationItem.title = username;
     
-    currentPage = 1;
+    self.currentPage = 1;
     self.repos = [NSMutableArray array];
     
     githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:password delegate:self withReachability:NO];
     
-    [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:currentPage];
+    [self.detailViewController loadUserPage];
+    [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:self.currentPage];
 }
 
 - (void)showLoadIndicator
 {
-    [activityIndicator startAnimating];
+    [self.activityIndicator startAnimating];
 }
 
 - (void)hideLoadIndicator
 {
-    [activityIndicator stopAnimating];
+    [self.activityIndicator stopAnimating];
 }
 
 #pragma mark UAGithubEngineDelegate Methods
@@ -259,10 +259,24 @@
     } 
     else
     {
-        currentPage += 1;
-        [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:currentPage];
+        self.currentPage += 1;
+        [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:self.currentPage];
     }
 }
 
+#pragma mark UIActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            [self.detailViewController showSearch];
+            break;
+            
+        case 1:
+            [self.detailViewController showRandomRepo];
+            break;
+    }
+}
 
 @end

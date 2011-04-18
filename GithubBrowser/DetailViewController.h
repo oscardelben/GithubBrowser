@@ -23,7 +23,9 @@
 
 - (void)showHome;
 - (void)showSearch;
+- (void)showRandomRepo;
 - (void)showSettings;
 - (void)loadMatchedUserRepos;
+- (void)loadUserPage;
 
 @end

@@ -13,7 +13,6 @@
 #import "SettingsViewController.h"
 #import "NSString+DBExtensions.h"
 #import "SearchViewController.h"
-#import "NSMutableURLRequest+BasicAuth.h"
 
 @interface DetailViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -53,21 +52,7 @@
 - (void)configureView
 {
     // Update the user interface for the detail item.
-
-    NSURL *url = [NSURL URLWithString:[self.detailItem valueForKey:@"url"]];
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
-    
-    // Add auth
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *username = [userDefaults valueForKey:GBGithubUsername];
-    NSString *password = [userDefaults valueForKey:GBGithubPassword];;
-    
-    [req addBasicAuth:username andPassword:password];
-    
-    // Load request
-    
-    [self.webView loadRequest:req];
+    [ApplicationHelper loadWebViewFromUrl:self.webView url:[self.detailItem valueForKey:@"url"]];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -79,15 +64,8 @@
 - (void)setTitle
 {
     NSString *username = [ApplicationHelper currentUsername];
-    
-    if (username && ![username blank]) 
-    {
-        titleBarButtonItem.title = username;
-    }
-    else
-    {
-        titleBarButtonItem.title = @"Select username";
-    }
+
+    titleBarButtonItem.title = (username && ![username blank]) ? username : @"Select username";
 }
 
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController: (UIPopoverController *)pc
@@ -203,6 +181,11 @@
     [viewController release];
 }
 
+- (void)showRandomRepo
+{
+    [ApplicationHelper loadWebViewFromUrl:self.webView url:@"https://github.com/repositories/random"];
+}
+
 - (void)showSettings
 {
     SettingsViewController *viewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
@@ -262,6 +245,22 @@
         [self hideLoadButtonItem];
     }
     
+}
+
+- (void)loadUserPage
+{
+    NSString *url
+    ;
+    if ([ApplicationHelper usingDefaultUser]) 
+    {
+        url = @"https://github.com";
+    }
+    else
+    {
+        url = [NSString stringWithFormat:@"https://github.com/%@", [ApplicationHelper currentUsername]];
+    }
+    
+    [ApplicationHelper loadWebViewFromUrl:self.webView url:url];
 }
 
 - (void)loadMatchedUserRepos
