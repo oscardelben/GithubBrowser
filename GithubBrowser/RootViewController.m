@@ -68,6 +68,8 @@
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicator.hidesWhenStopped = YES;
 
+    self.githubEngine = [[UAGithubEngine alloc] initWithUsername:nil password:nil delegate:self withReachability:NO];
+    
     [self configureButtons];
     
     [self reloadRepos];
@@ -209,15 +211,16 @@
     
     NSString *password = [ApplicationHelper password];
     
+    self.githubEngine.username = username;
+    self.githubEngine.password = password;
+    
     self.navigationItem.title = username;
     
     self.currentPage = 1;
     self.repos = [NSMutableArray array];
-    
-    githubEngine = [[UAGithubEngine alloc] initWithUsername:username password:password delegate:self withReachability:NO];
-    
+
     [self.detailViewController loadUserPage];
-    [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:self.currentPage];
+    [self.githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:self.currentPage];
 }
 
 - (void)showLoadIndicator
@@ -267,7 +270,7 @@
     else
     {
         self.currentPage += 1;
-        [githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:self.currentPage];
+        [self.githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:self.currentPage];
     }
 }
 
