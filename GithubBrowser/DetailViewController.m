@@ -12,6 +12,7 @@
 #import "SettingsViewController.h"
 #import "NSString+DBExtensions.h"
 #import "SearchViewController.h"
+#import "GithubBrowserAppDelegate.h"
 
 @interface DetailViewController ()
 @property (nonatomic, retain) UIPopoverController *popoverController;
@@ -20,15 +21,16 @@
 
 @implementation DetailViewController
 
+@synthesize splitController;
+
 @synthesize toolbar=_toolbar;
 @synthesize detailItem=_detailItem;
 @synthesize webView = _webView;
 @synthesize popoverController=_myPopoverController;
 
+@synthesize titleBarButtonItem;
 @synthesize loadButtonItem;
 @synthesize matchedUsername;
-
-@synthesize isFullScreen;
 
 #pragma mark - Managing the detail item
 
@@ -51,7 +53,7 @@
 }
 
 - (void)configureView
-{
+{   
     // Update the user interface for the detail item.
     [ApplicationHelper loadWebViewFromUrl:self.webView url:[self.detailItem valueForKey:@"url"]];
 }
@@ -69,7 +71,10 @@
     titleBarButtonItem.title = (username && ![username blank]) ? username : @"Select username";
 }
 
-- (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController: (UIPopoverController *)pc
+- (void)splitViewController:(MGSplitViewController*)svc 
+	 willHideViewController:(UIViewController *)aViewController 
+		  withBarButtonItem:(UIBarButtonItem*)barButtonItem 
+	   forPopoverController: (UIPopoverController*)pc
 {
     titleBarButtonItem = barButtonItem;
     [self setTitle];
@@ -82,7 +87,9 @@
 }
 
 // Called when the view is shown again in the split view, invalidating the button and popover controller.
-- (void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+- (void)splitViewController:(MGSplitViewController*)svc 
+	 willShowViewController:(UIViewController *)aViewController 
+  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
     NSMutableArray *items = [[self.toolbar items] mutableCopy];
     [items removeObjectAtIndex:0];
@@ -93,17 +100,17 @@
 
 - (void)configureToolbar
 {
-    //UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self action:@selector(showFullScreen)];
+    UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self    action:@selector(toggleFullScreen)];
     
-    //UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     loadButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(loadMatchedUserRepos)];
     loadButtonItem.enabled = NO;
     
-    self.toolbar.items = [NSArray arrayWithObjects:loadButtonItem, nil];
+    self.toolbar.items = [NSArray arrayWithObjects:loadButtonItem, spacer, fullScreenItem, nil];
     
-    //[spacer release];
-    //[fullScreenItem release];
+    [spacer release];
+    [fullScreenItem release];
 }
 
  // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -197,26 +204,6 @@
     [viewController release];
 }
 
-- (void)showFullScreen
-{
-    UIViewController *splitViewController = self.parentViewController;
-    
-    if (self.isFullScreen) 
-    {
-        splitViewController.modalPresentationStyle = UIModalPresentationPageSheet;
-        [splitViewController dismissModalViewControllerAnimated:NO];
-        
-        self.isFullScreen = NO;
-    }
-    else
-    {
-        splitViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-        [splitViewController presentModalViewController:self animated:NO];
-        
-        self.isFullScreen = YES;
-    }
-}
-
 - (void)loadUsernameFromWebView:(UIWebView *)webView
 {
     NSError *error = NULL;
@@ -272,6 +259,11 @@
 {
     [ApplicationHelper setCurrentUsername:self.matchedUsername notifyOfChange:YES];
     [self hideLoadButtonItem];
+}
+
+- (void)toggleFullScreen
+{
+    [splitController toggleMasterView:self];
 }
 
 #pragma mark - Memory management

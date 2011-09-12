@@ -34,9 +34,11 @@
     [loadButton release];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    NSLog(@"view will appear");
     
     // toolbar
     
@@ -48,7 +50,7 @@
     
     self.toolbarItems = [NSArray arrayWithObjects:homeButton, spacer, searchButton, spacer, settingsButton, nil];
     self.navigationController.toolbarHidden = NO;
-    
+
     [homeButton release];
     [settingsButton release];
     [spacer release];

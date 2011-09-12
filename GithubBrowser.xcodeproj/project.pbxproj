@@ -66,6 +66,11 @@
 		55C02D5C134C775B00606C13 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C02D5B134C775B00606C13 /* DetailViewController.m */; };
 		55C02D5F134C775B00606C13 /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C02D5D134C775B00606C13 /* DetailView.xib */; };
 		55C02D62134C775B00606C13 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C02D61134C775B00606C13 /* RootViewController.m */; };
+		55E00804141E0DF500E7B1CA /* zoomin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 55E00802141E0DF500E7B1CA /* zoomin.jpg */; };
+		55E00805141E0DF500E7B1CA /* zoomout.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 55E00803141E0DF500E7B1CA /* zoomout.jpg */; };
+		55E00809141E176300E7B1CA /* MGSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E00808141E176300E7B1CA /* MGSplitViewController.m */; };
+		55E00814141E189D00E7B1CA /* MGSplitCornersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E0080F141E189D00E7B1CA /* MGSplitCornersView.m */; };
+		55E00815141E189D00E7B1CA /* MGSplitDividerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E00811141E189D00E7B1CA /* MGSplitDividerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -169,6 +174,14 @@
 		55C02D5E134C775B00606C13 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailView.xib; sourceTree = "<group>"; };
 		55C02D60134C775B00606C13 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		55C02D61134C775B00606C13 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		55E00802141E0DF500E7B1CA /* zoomin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = zoomin.jpg; sourceTree = "<group>"; };
+		55E00803141E0DF500E7B1CA /* zoomout.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = zoomout.jpg; sourceTree = "<group>"; };
+		55E00807141E176300E7B1CA /* MGSplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSplitViewController.h; sourceTree = "<group>"; };
+		55E00808141E176300E7B1CA /* MGSplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSplitViewController.m; sourceTree = "<group>"; };
+		55E0080E141E189D00E7B1CA /* MGSplitCornersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSplitCornersView.h; sourceTree = "<group>"; };
+		55E0080F141E189D00E7B1CA /* MGSplitCornersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSplitCornersView.m; sourceTree = "<group>"; };
+		55E00810141E189D00E7B1CA /* MGSplitDividerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSplitDividerView.h; sourceTree = "<group>"; };
+		55E00811141E189D00E7B1CA /* MGSplitDividerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSplitDividerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,6 +201,7 @@
 		550DF1831359A95C00646B35 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				55E00806141E175100E7B1CA /* MGSplitViewController */,
 				550DF2041359ADDB00646B35 /* UIWebViewBasicAuth */,
 				55983BCE1351A64100483DAC /* NSStringExtensions */,
 				55A2692D134C8D500051D97A /* Github Api */,
@@ -356,6 +370,7 @@
 		55C02D4B134C775A00606C13 /* GithubBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				55E00800141E0DDE00E7B1CA /* Images */,
 				550DF1831359A95C00646B35 /* Vendor */,
 				55C02D54134C775A00606C13 /* GithubBrowserAppDelegate.h */,
 				55C02D55134C775A00606C13 /* GithubBrowserAppDelegate.m */,
@@ -386,6 +401,28 @@
 				55C02D52134C775A00606C13 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		55E00800141E0DDE00E7B1CA /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				55E00802141E0DF500E7B1CA /* zoomin.jpg */,
+				55E00803141E0DF500E7B1CA /* zoomout.jpg */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		55E00806141E175100E7B1CA /* MGSplitViewController */ = {
+			isa = PBXGroup;
+			children = (
+				55E0080E141E189D00E7B1CA /* MGSplitCornersView.h */,
+				55E0080F141E189D00E7B1CA /* MGSplitCornersView.m */,
+				55E00810141E189D00E7B1CA /* MGSplitDividerView.h */,
+				55E00811141E189D00E7B1CA /* MGSplitDividerView.m */,
+				55E00807141E176300E7B1CA /* MGSplitViewController.h */,
+				55E00808141E176300E7B1CA /* MGSplitViewController.m */,
+			);
+			name = MGSplitViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -458,6 +495,8 @@
 				55AF01C7135D766300D913D7 /* iTunesArtwork in Resources */,
 				55AF01D2135D831900D913D7 /* Default-Landscape.png in Resources */,
 				55AF01D3135D831900D913D7 /* Default~ipad.png in Resources */,
+				55E00804141E0DF500E7B1CA /* zoomin.jpg in Resources */,
+				55E00805141E0DF500E7B1CA /* zoomout.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +543,9 @@
 				557041D6135783A10033D892 /* SearchViewController.m in Sources */,
 				550DF2481359ADDB00646B35 /* NSData+Additions.m in Sources */,
 				550DF2491359ADDB00646B35 /* NSMutableURLRequest+BasicAuth.m in Sources */,
+				55E00809141E176300E7B1CA /* MGSplitViewController.m in Sources */,
+				55E00814141E189D00E7B1CA /* MGSplitCornersView.m in Sources */,
+				55E00815141E189D00E7B1CA /* MGSplitDividerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +579,40 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		553CB60E135EDD0C004CBF28 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Oscar Del Ben";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Oscar Del Ben";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "D37D46E5-FB33-4E23-8832-2203D09CED93";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D37D46E5-FB33-4E23-8832-2203D09CED93";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Distribution;
+		};
+		553CB60F135EDD0C004CBF28 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GithubBrowser/GithubBrowser-Prefix.pch";
+				INFOPLIST_FILE = "GithubBrowser/GithubBrowser-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Distribution;
+		};
 		55C02D63134C775B00606C13 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -559,13 +635,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Oscar Del Ben";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Oscar Del Ben";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "D37D46E5-FB33-4E23-8832-2203D09CED93";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D37D46E5-FB33-4E23-8832-2203D09CED93";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -609,6 +688,7 @@
 			buildConfigurations = (
 				55C02D63134C775B00606C13 /* Debug */,
 				55C02D64134C775B00606C13 /* Release */,
+				553CB60E135EDD0C004CBF28 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -618,6 +698,7 @@
 			buildConfigurations = (
 				55C02D66134C775B00606C13 /* Debug */,
 				55C02D67134C775B00606C13 /* Release */,
+				553CB60F135EDD0C004CBF28 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

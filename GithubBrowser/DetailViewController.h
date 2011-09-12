@@ -7,20 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MGSplitViewController.h"
 
-@interface DetailViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate, UIWebViewDelegate> {
+@interface DetailViewController : UIViewController <UIPopoverControllerDelegate, MGSplitViewControllerDelegate, UIWebViewDelegate>
 
-    UIWebView *_webView;
-    UIBarButtonItem *titleBarButtonItem;
-}
-
-
+@property (nonatomic, retain) IBOutlet MGSplitViewController *splitController;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, retain) id detailItem;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, retain) UIBarButtonItem *titleBarButtonItem;
 @property (nonatomic, retain) UIBarButtonItem *loadButtonItem;
 @property (nonatomic, retain) NSString *matchedUsername;
-@property (nonatomic, assign) BOOL isFullScreen;
 
 - (void)showHome;
 - (void)showSearch;

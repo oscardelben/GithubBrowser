@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MGSplitViewController;
 @class RootViewController;
-
 @class DetailViewController;
 
 @interface GithubBrowserAppDelegate : NSObject <UIApplicationDelegate> {
@@ -18,7 +18,7 @@
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
-@property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
+@property (nonatomic, retain) IBOutlet MGSplitViewController *splitViewController;
 
 @property (nonatomic, retain) IBOutlet RootViewController *rootViewController;
 
