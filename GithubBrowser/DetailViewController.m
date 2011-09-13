@@ -30,6 +30,7 @@
 
 @synthesize titleBarButtonItem;
 @synthesize loadButtonItem;
+@synthesize activityIndicator;
 @synthesize matchedUsername;
 
 #pragma mark - Managing the detail item
@@ -67,7 +68,6 @@
 - (void)setTitle
 {
     NSString *username = [ApplicationHelper currentUsername];
-
     titleBarButtonItem.title = (username && ![username blank]) ? username : @"Select username";
 }
 
@@ -76,7 +76,7 @@
 		  withBarButtonItem:(UIBarButtonItem*)barButtonItem 
 	   forPopoverController: (UIPopoverController*)pc
 {
-    titleBarButtonItem = barButtonItem;
+    self.titleBarButtonItem = barButtonItem;
     [self setTitle];
     
     NSMutableArray *items = [[self.toolbar items] mutableCopy];
@@ -100,6 +100,8 @@
 
 - (void)configureToolbar
 {
+    UIBarButtonItem *loadButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    
     UIBarButtonItem *fullScreenItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"full_screen"] style:UIBarButtonItemStylePlain target:self    action:@selector(toggleFullScreen)];
     
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -107,7 +109,7 @@
     loadButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(loadMatchedUserRepos)];
     loadButtonItem.enabled = NO;
     
-    self.toolbar.items = [NSArray arrayWithObjects:loadButtonItem, spacer, fullScreenItem, nil];
+    self.toolbar.items = [NSArray arrayWithObjects:loadButton, spacer, fullScreenItem, nil];
     
     [spacer release];
     [fullScreenItem release];
@@ -119,23 +121,17 @@
     [super viewDidLoad];
     
     self.webView.delegate = self;
-        
+
+    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicator.hidesWhenStopped = YES;
+    
     [self configureToolbar];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(setTitle) name:GBCredentialsChanged object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    NSString *username = [ApplicationHelper currentUsername];
+    [notificationCenter addObserver:self selector:@selector(showLoadIndicator) name:GBShowLoadIndicator object:nil];
+    [notificationCenter addObserver:self selector:@selector(hideLoadIndicator) name:GBHideLoadIndicator object:nil];
     
-    if (!username || [username blank]) 
-    {
-        [self showSettings];
-    }
 }
 
 - (void)viewDidUnload
@@ -191,17 +187,6 @@
 - (void)showRandomRepo
 {
     [ApplicationHelper loadWebViewFromUrl:self.webView url:@"https://github.com/repositories/random"];
-}
-
-- (void)showSettings
-{
-    SettingsViewController *viewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    navController.modalPresentationStyle = UIModalPresentationFormSheet;
-    
-    [self presentModalViewController:navController animated:YES];
-    
-    [viewController release];
 }
 
 - (void)loadUsernameFromWebView:(UIWebView *)webView
@@ -266,10 +251,21 @@
     [splitController toggleMasterView:self];
 }
 
+- (void)showLoadIndicator
+{
+    [self.activityIndicator startAnimating];
+}
+
+- (void)hideLoadIndicator
+{
+    [self.activityIndicator stopAnimating];
+}
+
 #pragma mark - Memory management
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_myPopoverController release];
     [_toolbar release];
     [_detailItem release];

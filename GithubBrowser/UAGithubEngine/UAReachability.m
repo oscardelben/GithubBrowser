@@ -7,11 +7,10 @@
 //
 
 #import "UAReachability.h"
+#import "UAGithubEngineConstants.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 
 @implementation UAReachability
-
-/*
 
 // http://www.cocoabuilder.com/archive/cocoa/166350-detecting-internet-code-part-1.html#166364
 
@@ -23,7 +22,7 @@ static void reachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 - (id)init
 {
-	if (self = [super init])
+	if ((self = [super init]))
 	{
 		reachabilityRef = SCNetworkReachabilityCreateWithName(NULL, [@"www.github.com" UTF8String]);
 		SCNetworkReachabilityContext context = {0, self, CFRetain, CFRelease, NULL};
@@ -47,6 +46,5 @@ static void reachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	return (flags & kSCNetworkReachabilityFlagsReachable) && !(flags & kSCNetworkReachabilityFlagsConnectionRequired);
 }
 										   
-*/
- 
+
 @end

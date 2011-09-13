@@ -10,22 +10,13 @@
 
 @class DetailViewController;
 
-@interface RootViewController : UITableViewController <UAGithubEngineDelegate, UIActionSheetDelegate> {
+@interface RootViewController : UITableViewController <UAGithubEngineDelegate> {
 }
 
-		
 @property (nonatomic, retain) IBOutlet DetailViewController *detailViewController;
-
 @property (nonatomic, retain) UAGithubEngine *githubEngine;
-@property (nonatomic, retain) NSMutableArray *repos;
+@property (nonatomic, retain) NSString *username;
 
-@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic, retain) UIBarButtonItem *searchButton;
-@property (nonatomic, assign) int currentPage;
-
-- (void)showSearchSheet;
-- (void)reloadRepos;
-- (void)showLoadIndicator;
-- (void)hideLoadIndicator;
+- (void)showSettings;
 
 @end

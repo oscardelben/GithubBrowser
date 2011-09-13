@@ -66,7 +66,7 @@
     NSString *password = passwordTextField.text;
     
     [ApplicationHelper saveCredentials:username password:password notifyOfChange:YES];
-    
+
     [self dismissModalViewControllerAnimated:YES];
 }
 

@@ -6,7 +6,8 @@
 //  Copyright 2010 Owain R Hunt. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
 
 @protocol UAGithubEngineDelegate <NSObject>
 
@@ -25,6 +26,8 @@
 #pragma mark Users
 
 - (void)usersReceived:(NSArray *)users forConnection:(NSString *)connectionIdentifier;
+- (void)followingReceived:(NSArray *)following forConnection:(NSString *)connectionIdentifier;
+- (void)followersReceived:(NSArray *)followers forConnection:(NSString *)connectionIdentifier;
 
 
 #pragma mark Repositories
@@ -68,5 +71,9 @@
 - (void)blobReceived:(NSArray *)blob forConnection:(NSString *)connectionIdentifier;
 - (void)rawBlobReceived:(NSData *)blob forConnection:(NSString *)connectionIdentifier;
 
+
+#pragma mark Organizations
+
+- (void)organizationsReceived:(NSArray *)organizations forConnection:(NSString *)connectionIdentifier;
 
 @end

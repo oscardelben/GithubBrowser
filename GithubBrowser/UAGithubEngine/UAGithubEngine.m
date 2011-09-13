@@ -15,6 +15,7 @@
 #import "UAGithubCommitsJSONParser.h"
 #import "UAGithubIssuesJSONParser.h"
 #import "UAGithubIssueCommentsJSONParser.h"
+#import "UAGithubOrganizationsJSONParser.h"
 #import "CJSONDeserializer.h"
 
 #import "UAGithubEngineRequestTypes.h"
@@ -46,7 +47,7 @@
 
 - (id)initWithUsername:(NSString *)aUsername password:(NSString *)aPassword delegate:(id)theDelegate withReachability:(BOOL)withReach
 {
-	if (self = [super init]) 
+	if ((self = [super init])) 
 	{
 		username = [aUsername retain];
 		password = [aPassword retain];
@@ -145,6 +146,7 @@
 		case UAGithubCollaboratorAddRequest:
 		case UAGithubCollaboratorRemoveRequest:
 		case UAGithubIssueCommentAddRequest:
+        case UAGithubFollowRequest:
 		{
 			[urlRequest setHTTPMethod:@"POST"];
 		}
@@ -206,9 +208,13 @@
 		case UAGithubRepositoryLanguageBreakdownResponse:
 		case UAGithubTagsResponse:
 		case UAGithubBranchesResponse:
+        case UAGithubFollowingResponse:
+        case UAGithubFollowersResponse:
 		case UAGithubTreeResponse:
 			[[[UAGithubSimpleJSONParser alloc] initWithJSON:connection.data delegate:self connectionIdentifier:connection.identifier requestType:connection.requestType responseType:connection.responseType] autorelease];
 			break;
+        case UAGithubOrganizationsResponse:
+            [[[UAGithubOrganizationsJSONParser alloc] initWithJSON:connection.data delegate:self connectionIdentifier:connection.identifier requestType:connection.requestType responseType:connection.responseType] autorelease];
 		default:
 			break;
 	}
@@ -271,6 +277,16 @@
 		case UAGithubTreeResponse:
 			[delegate treeReceived:parsedObjects forConnection:connectionIdentifier];
 			break;
+        case UAGithubFollowingResponse:
+			[delegate followingReceived:parsedObjects forConnection:connectionIdentifier];
+			break;
+        case UAGithubFollowersResponse:
+			[delegate followersReceived:parsedObjects forConnection:connectionIdentifier];
+			break;
+        case UAGithubOrganizationsResponse:
+            [delegate organizationsReceived:parsedObjects forConnection:connectionIdentifier];
+			break;
+
 		default:
 			break;
 	}
@@ -555,6 +571,29 @@
 }
 
 
+- (NSString *)following:(NSString *)user
+{
+	return [self sendRequest:[NSString stringWithFormat:@"user/show/%@/following", user] requestType:UAGithubUserRequest responseType:UAGithubFollowingResponse withParameters:nil];	    
+}
+
+- (NSString *)followers:(NSString *)user
+{
+	return [self sendRequest:[NSString stringWithFormat:@"user/show/%@/followers", user] requestType:UAGithubUserRequest responseType:UAGithubFollowersResponse withParameters:nil];	    
+    
+}
+
+- (NSString *)follow:(NSString *)user 
+{
+ 	return [self sendRequest:[NSString stringWithFormat:@"user/follow/%@", user] requestType:UAGithubFollowRequest responseType:UAGithubFollowResponse withParameters:nil];	    
+   
+}
+
+- (NSString *)unfollow:(NSString *)user
+{
+ 	return [self sendRequest:[NSString stringWithFormat:@"user/unfollow/%@", user] requestType:UAGithubFollowRequest responseType:UAGithubFollowResponse withParameters:nil];	        
+}
+
+
 #pragma mark Commits
 
 - (NSString *)commitsForBranch:(NSString *)branchPath
@@ -596,6 +635,12 @@
 	return [self sendRequest:[NSString stringWithFormat:@"blob/show/%@", blobPath] requestType:UAGithubRawBlobRequest responseType:UAGithubRawBlobResponse withParameters:nil];	
 }
 
+#pragma mark Organizations
+
+- (NSString *)organizationsForUser:(NSString *)aUser
+{
+	return [self sendRequest:[NSString stringWithFormat:@"user/show/%@/organizations", aUser] requestType:UAGithubOrganizationsRequest responseType:UAGithubOrganizationsResponse withParameters:nil];	
+}
 
 #pragma mark NSURLConnection Delegate Methods
 

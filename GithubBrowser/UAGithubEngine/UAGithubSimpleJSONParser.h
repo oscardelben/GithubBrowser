@@ -6,7 +6,9 @@
 //  Copyright 2010 Owain R Hunt. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
+
 #import "UAGithubJSONParser.h"
 
 @interface UAGithubSimpleJSONParser : UAGithubJSONParser {

@@ -11,82 +11,48 @@
 #import "DetailViewController.h"
 #import "SearchViewController.h"
 #import "SettingsViewController.h"
+#import "ReposViewController.h"
 
 @implementation RootViewController
-		
+
 @synthesize detailViewController;
-
 @synthesize githubEngine;
-@synthesize repos;
+@synthesize username;
 
-@synthesize activityIndicator;
-@synthesize searchButton;
-@synthesize currentPage;
-
-
--(void)configureButtons
+- (void)fetchUsername
 {
-    // navigation bar
-    UIBarButtonItem *loadButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    self.githubEngine = [[UAGithubEngine alloc] initWithUsername:nil password:nil delegate:self withReachability:NO];
+    self.username = [ApplicationHelper currentUsername];
     
-    self.navigationItem.leftBarButtonItem = loadButton;
+    if (!username || [username blank]) {
+        return;
+    }
     
-    [loadButton release];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
+    NSString *password = [ApplicationHelper password];
     
-    NSLog(@"view will appear");
+    self.githubEngine.username = username;
+    self.githubEngine.password = password;
     
-    // toolbar
-    
-    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showHome)];
-    searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showSearchSheet)];
-    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"19-gear.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showSettings)];
-    
-    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    self.toolbarItems = [NSArray arrayWithObjects:homeButton, spacer, searchButton, spacer, settingsButton, nil];
-    self.navigationController.toolbarHidden = NO;
-
-    [homeButton release];
-    [settingsButton release];
-    [spacer release];
+    self.navigationItem.title = username;
 }
 
 - (void)viewDidLoad
 {
+    // TODO: add activity indicator
+    
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = NO;
     self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
-
+    
+    [detailViewController loadUserPage];
+    
+    [self fetchUsername];
+    
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(reloadRepos) name:GBCredentialsChanged object:nil];
-    [notificationCenter addObserver:self selector:@selector(showLoadIndicator) name:GBShowLoadIndicator object:nil];
-    [notificationCenter addObserver:self selector:@selector(hideLoadIndicator) name:GBHideLoadIndicator object:nil];
-    
-    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.activityIndicator.hidesWhenStopped = YES;
-
-    self.githubEngine = [[UAGithubEngine alloc] initWithUsername:nil password:nil delegate:self withReachability:NO];
-    
-    [self configureButtons];
-    
-    [self reloadRepos];
-    
-    // Todo: add pagination for repos
-    // TODO: add error handling (no internet, error loading repos, etc)
+    [notificationCenter addObserver:self.tableView selector:@selector(reloadData) name:GBCredentialsChanged object:nil];
 }
 
-- (void)viewDidUnload
-{
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter removeObserver:self];
-    
-    [super viewDidUnload];
-}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
@@ -101,8 +67,11 @@
 		
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [repos count];
-    		
+    // Username
+    // Organizations
+    // Add Account
+    
+    return (!username || [username blank]) ? 1 :2;    		
 }
 
 		
@@ -119,176 +88,68 @@
     }
 
     // Configure the cell.
-    NSDictionary *repo = [repos objectAtIndex:indexPath.row];
-
-    cell.textLabel.text = [repo valueForKey:@"name"];
-    cell.detailTextLabel.text = [repo valueForKey:@"description"];
     
-    int private = [[repo valueForKey:@"private"] intValue];
-    int fork = [[repo valueForKey:@"fork"] intValue];
-
-    if (private == 1) 
+    if (!username || [username blank])
     {
-        if (fork == 1) 
-        {
-            cell.imageView.image = [UIImage imageNamed:@"private-fork.png"];
-        }
-        else
-        {
-            cell.imageView.image = [UIImage imageNamed:@"private.png"];
-        }
-        
-        // background color
-        UIView *bg = [[UIView alloc] initWithFrame:cell.frame];
-        bg.backgroundColor = [UIColor colorWithRed:255/255.0 green:254/255.0 blue:235/255.0 alpha:1];
-        cell.backgroundView = bg;
-        [bg release];
-    } 
-    else
-    {
-        if (fork == 1) 
-        {
-            cell.imageView.image = [UIImage imageNamed:@"public-fork.png"];
-        }
-        else
-        {
-            cell.imageView.image = [UIImage imageNamed:@"public.png"];
-        }
-        
-        UIView *bg = [[UIView alloc] initWithFrame:cell.frame];
-        bg.backgroundColor = [UIColor whiteColor];
-        cell.backgroundView = bg;
-        [bg release];
+        cell.textLabel.text = @"Add Account";
     }
-    
-    // TODO: try to change cell height
-    
+    else
+    {        
+        if (indexPath.row == 0) 
+        {
+            cell.textLabel.text = username;
+        }
+        else
+        {
+            cell.textLabel.text = @"Manage Account";
+        }
+    }
+      
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {    
-    NSDictionary *currentRepo = [self.repos objectAtIndex:indexPath.row];
-
-    detailViewController.detailItem = currentRepo;
+    if (!username || [username blank])
+    {
+        [self showSettings];
+    }
+    else
+    {
+        
+        if (indexPath.row == 0) 
+        {
+            ReposViewController *reposViewController = [[[ReposViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
+            reposViewController.detailViewController = self.detailViewController;
+            [self.navigationController pushViewController:reposViewController animated:YES];
+        }
+        else
+        {
+            [self showSettings];
+        }
+    }
 }
 
 - (void)dealloc
 {
     [detailViewController release];
     [githubEngine release];
-    [repos release];
-    [activityIndicator release];
-    [searchButton release];
+    [username release];
+     
     [super dealloc];
 }
 
 #pragma mark Utility methods
 
-- (void)showSearchSheet
+- (void)showSettings
 {
-    NSArray *otherTitles = [NSArray arrayWithObjects:@"Search user", @"Random repo", nil];
+    SettingsViewController *viewController = [[SettingsViewController alloc] initWithNibName:@"SettingsViewController" bundle:nil];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    [self presentModalViewController:navController animated:YES];
     
-    for (int i = 0; i < [otherTitles count]; i++) 
-    {
-        [actionSheet addButtonWithTitle:[otherTitles objectAtIndex:i]];
-    }
-    
-    [actionSheet showFromBarButtonItem:self.searchButton animated:YES];
-    
-    [actionSheet release];
-}
-
-- (void)reloadRepos
-{
-    [self showLoadIndicator];
-    
-    NSString *username = [ApplicationHelper currentUsername];
-    
-    if (!username || [username blank]) {
-        return;
-    }
-    
-    NSString *password = [ApplicationHelper password];
-    
-    self.githubEngine.username = username;
-    self.githubEngine.password = password;
-    
-    self.navigationItem.title = username;
-    
-    self.currentPage = 1;
-    self.repos = [NSMutableArray array];
-
-    [self.detailViewController loadUserPage];
-    [self.githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:self.currentPage];
-}
-
-- (void)showLoadIndicator
-{
-    [self.activityIndicator startAnimating];
-}
-
-- (void)hideLoadIndicator
-{
-    [self.activityIndicator stopAnimating];
-}
-
-#pragma mark UAGithubEngineDelegate Methods
-
-- (void)requestSucceeded:(NSString *)connectionIdentifier
-{
-	NSLog(@"Request succeeded: %@", connectionIdentifier);
-}
-
-
-- (void)requestFailed:(NSString *)connectionIdentifier withError:(NSError *)error
-{
-    NSLog(@"Request failed: %@, error: %@ (%@)", connectionIdentifier, [error localizedDescription], [error userInfo]);	
-}
-
-
-#pragma mark Github api
-
-#define MAX_PAGES 10
-
-- (void)repositoriesReceived:(NSArray *)repositories forConnection:(NSString *)connectionIdentifier
-{   
-    [self.repos addObjectsFromArray:repositories];
-
-    if ([repositories count] == 0 || self.currentPage > MAX_PAGES)
-    {
-
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"pushed_at" ascending:NO];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-
-        [self.repos sortUsingDescriptors:sortDescriptors];
-                
-        [self.tableView reloadData];
-        
-        [self hideLoadIndicator];
-    } 
-    else
-    {
-        self.currentPage += 1;
-        [self.githubEngine repositoriesForUser:githubEngine.username includeWatched:NO page:self.currentPage];
-    }
-}
-
-#pragma mark UIActionSheetDelegate Methods
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-        case 0:
-            [self.detailViewController showSearch];
-            break;
-            
-        case 1:
-            [self.detailViewController showRandomRepo];
-            break;
-    }
+    [viewController release];
 }
 
 @end

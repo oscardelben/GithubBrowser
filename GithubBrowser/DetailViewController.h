@@ -17,13 +17,16 @@
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 @property (nonatomic, retain) UIBarButtonItem *titleBarButtonItem;
 @property (nonatomic, retain) UIBarButtonItem *loadButtonItem;
+@property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) NSString *matchedUsername;
 
 - (void)showHome;
 - (void)showSearch;
 - (void)showRandomRepo;
-- (void)showSettings;
 - (void)loadMatchedUserRepos;
 - (void)loadUserPage;
+
+- (void)showLoadIndicator;
+- (void)hideLoadIndicator;
 
 @end
