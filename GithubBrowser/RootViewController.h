@@ -10,13 +10,12 @@
 
 @class DetailViewController;
 
-@interface RootViewController : UITableViewController <UAGithubEngineDelegate> {
+@interface RootViewController : UITableViewController {
 }
 
 @property (nonatomic, retain) IBOutlet DetailViewController *detailViewController;
 @property (nonatomic, retain) UAGithubEngine *githubEngine;
 @property (nonatomic, retain) NSString *username;
-
 - (void)showSettings;
 
 @end

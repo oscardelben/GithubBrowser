@@ -167,9 +167,15 @@
 
 # pragma mark actions
 
+- (void)showGithubHomepage
+{
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://github.com"]]];
+}
+
 - (void)showHome
 {
     NSString *username = [ApplicationHelper username];
+    
     [ApplicationHelper setCurrentUsername:username notifyOfChange:YES];
 }
 

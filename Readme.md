@@ -1,6 +1,8 @@
 Github Browser
 ==============
 
-Coming Soon for your iPad.
+A minimalistic Github Browser for your iPad.
+
+Coming Soon.
 
 Icon by [@michelegera](http://twitter.com/michelegera)

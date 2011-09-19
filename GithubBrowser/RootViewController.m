@@ -38,18 +38,25 @@
 
 - (void)viewDidLoad
 {
-    // TODO: add activity indicator
-    
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = NO;
     self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
     
-    [detailViewController loadUserPage];
+    [detailViewController showGithubHomepage];
     
     [self fetchUsername];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self.tableView selector:@selector(reloadData) name:GBCredentialsChanged object:nil];
+    [notificationCenter addObserver:self selector:@selector(reloadData) name:GBCredentialsChanged object:nil];
+    
+    // toolbar
+    
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showGithubHomepage)];
+    
+    self.toolbarItems = [NSArray arrayWithObjects:homeButton, nil];
+    self.navigationController.toolbarHidden = NO;
+    
+    [homeButton release];
 }
 
 
@@ -98,6 +105,7 @@
         if (indexPath.row == 0) 
         {
             cell.textLabel.text = username;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         else
         {
@@ -135,7 +143,7 @@
     [detailViewController release];
     [githubEngine release];
     [username release];
-     
+    
     [super dealloc];
 }
 
@@ -150,6 +158,12 @@
     [self presentModalViewController:navController animated:YES];
     
     [viewController release];
+}
+
+- (void)reloadData
+{
+    [self fetchUsername];
+    [self.tableView reloadData];
 }
 
 @end

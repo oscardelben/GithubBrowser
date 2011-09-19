@@ -20,6 +20,7 @@
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) NSString *matchedUsername;
 
+- (void)showGithubHomepage;
 - (void)showHome;
 - (void)showSearch;
 - (void)showRandomRepo;
