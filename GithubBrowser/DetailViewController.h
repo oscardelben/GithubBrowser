@@ -16,7 +16,7 @@
 @property (nonatomic, retain) id detailItem;
 @property (nonatomic, retain) IBOutlet UIWebView *webView;
 @property (nonatomic, retain) UIBarButtonItem *titleBarButtonItem;
-@property (nonatomic, retain) UIBarButtonItem *loadButtonItem;
+@property (nonatomic, retain) UIBarButtonItem *loadUserItem;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) NSString *matchedUsername;
 

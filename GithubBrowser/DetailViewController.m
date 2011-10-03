@@ -29,7 +29,7 @@
 @synthesize popoverController=_myPopoverController;
 
 @synthesize titleBarButtonItem;
-@synthesize loadButtonItem;
+@synthesize loadUserItem;
 @synthesize activityIndicator;
 @synthesize matchedUsername;
 
@@ -106,10 +106,10 @@
     
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    loadButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(loadMatchedUserRepos)];
-    loadButtonItem.enabled = NO;
-    
-    self.toolbar.items = [NSArray arrayWithObjects:loadButton, spacer, fullScreenItem, nil];
+    loadUserItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(loadMatchedUserRepos)];
+    loadUserItem.enabled = NO;
+
+    self.toolbar.items = [NSArray arrayWithObjects:loadButton, loadUserItem, spacer, fullScreenItem, nil];
     
     [spacer release];
     [fullScreenItem release];
@@ -149,9 +149,9 @@
 - (void)hideLoadButtonItem
 {
     self.matchedUsername = @"";
-    loadButtonItem.title = @"";
-    loadButtonItem.enabled = NO;
-    loadButtonItem.style = UIBarButtonItemStylePlain;
+    loadUserItem.title = @"";
+    loadUserItem.enabled = NO;
+    loadUserItem.style = UIBarButtonItemStylePlain;
 }
 
 - (void)showLoadButtonItem
@@ -159,10 +159,10 @@
     // Only show if different than current username
     if ([self.matchedUsername isEqualToString:[ApplicationHelper currentUsername]])
         return;
-    
-    loadButtonItem.title = [NSString stringWithFormat:@"Load %@", self.matchedUsername];
-    loadButtonItem.enabled = YES;
-    loadButtonItem.style = UIBarButtonItemStyleBordered;
+
+    loadUserItem.title = [NSString stringWithFormat:@"Load %@", self.matchedUsername];
+    loadUserItem.enabled = YES;   
+    loadUserItem.style = UIBarButtonItemStyleBordered;
 }
 
 # pragma mark actions
@@ -181,6 +181,7 @@
 
 - (void)showSearch
 {
+    /*
     SearchViewController *viewController = [[SearchViewController alloc] initWithNibName:@"SearchViewController" bundle:nil];
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -188,16 +189,20 @@
     [self presentModalViewController:navController animated:YES];
     
     [viewController release];
+     */
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://github.com/search"]]];
 }
 
+/*
 - (void)showRandomRepo
 {
     [ApplicationHelper loadWebViewFromUrl:self.webView url:@"https://github.com/repositories/random"];
 }
+*/
 
 - (void)loadUsernameFromWebView:(UIWebView *)webView
 {
-    NSError *error = NULL;
+    NSError *error;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"https://github.com/(.+)/(.+)"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
@@ -276,7 +281,7 @@
     [_toolbar release];
     [_detailItem release];
     [_webView release];
-    [loadButtonItem release];
+    [loadUserItem release];
     [matchedUsername release];
     [super dealloc];
 }

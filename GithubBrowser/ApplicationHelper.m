@@ -75,7 +75,7 @@
     
     [userDefaults setObject:username forKey:GBGithubUsername];
     [userDefaults setObject:password forKey:GBGithubPassword];
-    
+
     if (notify) 
     {
         [self sendCredentialsChangedNotification];

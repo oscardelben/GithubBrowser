@@ -29,7 +29,7 @@
     // toolbar
     
     UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"53-house.png"] style:UIBarButtonItemStylePlain target:self.detailViewController action:@selector(showHome)];
-    searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showSearchSheet)];
+    searchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"06-magnify.png"] style:UIBarButtonItemStylePlain target:detailViewController action:@selector(showSearch)];
     
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -160,6 +160,7 @@
 
 #pragma mark Utility methods
 
+/*
 - (void)showSearchSheet
 {
     NSArray *otherTitles = [NSArray arrayWithObjects:@"Search user", @"Random repo", nil];
@@ -175,6 +176,7 @@
     
     [actionSheet release];
 }
+*/
 
 - (void)reloadRepos
 {    

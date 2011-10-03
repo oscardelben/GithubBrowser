@@ -22,7 +22,7 @@
 - (void)fetchUsername
 {
     self.githubEngine = [[UAGithubEngine alloc] initWithUsername:nil password:nil delegate:self withReachability:NO];
-    self.username = [ApplicationHelper currentUsername];
+    self.username = [ApplicationHelper username];
     
     if (!username || [username blank]) {
         return;
@@ -127,6 +127,9 @@
         
         if (indexPath.row == 0) 
         {
+            // reset current username
+            [ApplicationHelper setCurrentUsername:[ApplicationHelper username] notifyOfChange:NO];
+            
             ReposViewController *reposViewController = [[[ReposViewController alloc] initWithStyle:UITableViewStylePlain] autorelease];
             reposViewController.detailViewController = self.detailViewController;
             [self.navigationController pushViewController:reposViewController animated:YES];

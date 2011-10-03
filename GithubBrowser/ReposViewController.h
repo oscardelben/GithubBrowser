@@ -24,5 +24,6 @@
 
 - (void)showSearchSheet;
 - (void)reloadRepos;
+- (void)loadUsername:(NSString *)username;
 
 @end
