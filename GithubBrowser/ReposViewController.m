@@ -36,6 +36,9 @@
     self.toolbarItems = [NSArray arrayWithObjects:homeButton, spacer, searchButton, nil];
     self.navigationController.toolbarHidden = NO;
     
+    // force gradient
+    [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
+    
     [homeButton release];
     [spacer release];
 }
